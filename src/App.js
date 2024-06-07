@@ -1,4 +1,5 @@
 import logo from './logo.svg';
+import 'bulma/css/bulma.min.css';
 import './App.css';
 
 function App() {

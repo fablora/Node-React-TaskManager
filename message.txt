@@ -1,0 +1,42 @@
+Initial commit
+
+- Structured the project architecture with backend and frontend directories.
+- Implemented the following files with basic functionality:
+
+  1. **authController.js**:
+     - User registration and login functionalities using bcrypt for password hashing and jwt for token generation.
+
+  2. **Project.js**:
+     - Mongoose schema for Project model, including project name, timeline, and tasks.
+
+  3. **Task.js**:
+     - Mongoose schema for Task model, including task title, description, status, assigned user, due date, and project reference.
+
+  4. **User.js**:
+     - Mongoose schema for User model, including username, email validation, and password hashing.
+
+  5. **authRoutes.js**:
+     - Authentication routes for user registration and login.
+
+  6. **server.js**:
+     - Express server setup with MongoDB connection, CORS, JSON parsing, and Socket.IO for real-time connections.
+     - Includes basic route setup for authentication.
+
+Project structure overview:
+- **backend**: Contains the server-side code.
+  - **config**: Configuration files.
+  - **controllers**: Route handlers (authController.js).
+  - **middleware**: Custom middleware (authMiddleware.js).
+  - **models**: Mongoose schemas (Project.js, Task.js, User.js).
+  - **routes**: Express routes (authRoutes.js, projectRoutes.js, taskRoutes.js).
+  - **socket**: Socket.IO setup (server.js).
+
+- **src**: Frontend code (React).
+  - **components**: React components.
+  - **pages**: React pages.
+  - **routes**: React routes.
+  - **services**: API service functions.
+
+Other files:
+- **package.json**: Project dependencies.
+- **.env**: Environment variables.
