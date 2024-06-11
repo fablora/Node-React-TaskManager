@@ -1,5 +1,9 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import './LoginRegister.css';
 import { registerUser } from "../services/api";
+import { MdEmail } from "react-icons/md";
+import { FaKey } from "react-icons/fa";
 
 const Register = () => {
     const [email, setEmail] = useState('');
@@ -27,19 +31,21 @@ const Register = () => {
                         placeholder = "Email" 
                         value = {email} 
                         onChange = {(e) => setEmail(e.target.value)} required />
+                        <MdEmail className="icon"/>
                     </div>
                     <div className = "input-box">
                         <input type = "password"
                         placeholder = "Password" 
                         value = {password} 
                         onChange = {(e) => setPassword(e.target.value)} required />
+                        <FaKey className="icon"/>
                     </div>
-                    <div className = "remember-forgot">
+                    <div className = "agree-terms">
                         <label><input type = "checkbox" /> I agree to the terms & conditions</label>
                     </div>
                     <button type = "submit">Register</button>
-                    <div className= "register-link">
-                        <p> Already have an account? <a href="#">Login</a></p>
+                    <div className= "login-link">
+                        <p> Already have an account? <Link to="/login">Login</Link></p>
                     </div>
                 </form>
                 {message && <p>{message}</p>}

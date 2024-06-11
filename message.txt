@@ -1,40 +1,10 @@
-Reorganised project structure by deleting, moving, and creating folders to streamline organization.
+feat: Enhance project with CSS styling, react-icons, and improved UI/UX
 
-Drafted backend controllers and routes:
-- projectController.js:
-  - Added createProject function to handle project creation.
-  - Added getProjectById function to retrieve projects by ID.
-  - Added createTask function to handle task creation.
-- projectRoutes.js:
-  - Created routes for project creation and retrieval by ID.
-- taskRoutes.js:
-  - Created route for task creation.
-
-Drafted backend socket.js:
-- Added socket connection and taskUpdated event handling.
-
-Initial drafts of frontend components:
-- CreateProject.js:
-  - Created form for project creation with fields for project name, start date, and end date.
-- CreateTask.js:
-  - Created form for task creation with fields for task title, description, status, assigned to, due date, and project selection.
-- Login.js:
-  - Created login form with fields for email and password, including remember me and forgot password options.
-- Project.js:
-  - Created project display component to show project details and associated tasks.
-- Register.js:
-  - Created registration form with fields for email and password, including terms and conditions agreement.
-
-Created frontend routing:
-- Routes.js:
-  - Added routes for Home, Project, Task, Register, Login, CreateProject, and CreateTask components.
-
-Created frontend API services:
-- api.js:
-  - Added functions to register, login, create projects, get projects, get project by ID, and create tasks.
-
-Drafted frontend socket handling:
-- socket.js:
-  - Established socket connection and taskUpdated event handling.
-
-Initial commit for the new structure and features.
+- index.css:
+  - Added global styles including font-family, layout alignment, and background settings.
+- LoginRegister.css:
+  - Designed wrapper for forms with a blurred background and border.
+  - Styled form elements: input boxes, icons, remember-forgot section, agree-terms section, and buttons.
+  - Included styles for registration and login links.
+- Added react-icons to the project:
+  - Imported and utilized react-icons to enhance UI/UX in forms.

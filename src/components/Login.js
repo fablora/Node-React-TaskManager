@@ -1,5 +1,9 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import './LoginRegister.css';
 import { loginUser } from "../services/api";
+import { FaUser, FaKey } from "react-icons/fa";
+
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -28,12 +32,14 @@ const Login = () => {
                         placeholder= "Email"
                         value = {email}
                         onChange = {(e) => setEmail(e.target.value)} required />
+                        <FaUser className="icon"/>
                     </div>
                     <div className = "input-box">
                         <input type = "password"
                         placeholder= "Password"
                         value = {password}
                         onChange = {(e) => setPassword(e.target.value)} required />
+                        <FaKey className="icon"/>
                     </div>
 
                     <div className = "remember-forgot">
@@ -42,7 +48,7 @@ const Login = () => {
                     </div>
                     <button type = "submit">Login</button>
                     <div className = "register-link">
-                        <p>Don't have an account? <a href = "#">Register</a></p>
+                        <p>Don't have an account? <Link to="/register">Register</Link></p>
                     </div>
                 </form>
             </div>

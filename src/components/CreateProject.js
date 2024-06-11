@@ -36,14 +36,14 @@ const CreateProject = () => {
                         onChange = {(e) => setProjectName(e.target.value)} required />
                     </div>
                     <div className = "input-box">
-                        <input type = "date"
-                        placeholder = "Start Date" 
+                        <label>Start Date</label>
+                        <input type = "date"                        
                         value = {startDate} 
                         onChange = {(e) => setStartDate(e.target.value)} required />
                     </div>
                     <div className = "input-box">
-                        <input type = "date"
-                        placeholder = "End Date" 
+                        <label>End Date</label>
+                        <input type = "date"                        
                         value = {endDate} 
                         onChange = {(e) => setEndDate(e.target.value)} required />
                     </div>
