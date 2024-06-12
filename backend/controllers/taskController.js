@@ -8,4 +8,13 @@ exports.createTask = async (req, res) => {
     } catch (error) {
         res.status(400).send(error);
     }
-};  
+};
+
+exports.getTasks = async (req, res) => {
+    try {
+        const tasks = await Task.find();
+        res.send(tasks);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+};

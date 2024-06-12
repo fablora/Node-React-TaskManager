@@ -10,6 +10,15 @@ exports.createProject = async (req, res) => {
     }
 };
 
+exports.getProjects = async (req, res) => {
+    try {
+        const projects = await Project.find();
+        res.send(projects);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+};
+
 exports.getProjectById = async (req, res) => {
     try {
         const project = await Project.findById(req.params.id).populate('task');

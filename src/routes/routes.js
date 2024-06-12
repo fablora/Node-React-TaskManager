@@ -7,6 +7,7 @@ import Register from '../components/Register';
 import Login from '../components/Login';
 import CreateProject from '../components/CreateProject';
 import CreateTask from '../components/CreateTask';
+import Dashboard from '../components/Dashboard';
 
 function AppRoutes() {
     return (
@@ -19,6 +20,7 @@ function AppRoutes() {
                 <Route path = '/login' element = {<Login />} />
                 <Route path = '/create-project' element = {<CreateProject />} />
                 <Route path = '/create-task' element = {<CreateTask />} />
+                <Route path = '/dashboard' element = {<Dashboard/>} />
             </Routes>
         </Router>
     );

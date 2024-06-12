@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import './LoginRegister.css';
 import { loginUser } from "../services/api";
 import { FaUser, FaKey } from "react-icons/fa";
@@ -9,6 +9,7 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit =async (event) => {
         event.preventDefault();
@@ -17,6 +18,7 @@ const Login = () => {
             const response = await loginUser(userData);
             localStorage.setItem('token', response.token);
             setMessage('Login Succesful');
+            navigate('/dashboard');
         } catch (error) {
             setMessage('An error occurred during login: ' + error.response.data);
         }
