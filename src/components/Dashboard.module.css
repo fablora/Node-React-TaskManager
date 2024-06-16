@@ -9,7 +9,7 @@
     color: aliceblue;
 }
 
-.wrapper .centered-content {
+.wrapper .centeredContent {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -17,7 +17,7 @@
     height: 100%;
 }
 
-.projects-container {
+.projectsContainer {
     display: flex;
     width: 100%;
     height: 100%;
@@ -30,31 +30,41 @@
     flex-direction: column;
     width: 275px;
     padding: 40px;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-    background: white;
+    border: transparent;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    background: rgba(0, 0, 0, 0.3);
 }
 
-.tasks-list-container {
+.title {
+    font-family: 'cambria';
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #36454F;
+}
+
+.tasksListContainer {
     display: flex;
+    flex-direction: column;
     flex-grow: 1;
     padding: 40px;
 }
 
-.title-has-text-primary{
+.titleHasTextPrimary{
     font-size: 20px;
     text-transform: uppercase;
     letter-spacing: 2px;
     font-weight: 600;
 }
 
-.list-menu {
+.listMenu {
     margin-top: 15px;
     flex-direction: column;
     flex-grow: 1;
 }
 
-.list-menu-item {
+.listMenuItem {
     display: flex;
     align-items: center;
     border-radius: 5px;
@@ -63,6 +73,17 @@
     padding: 5px;
 }
 
-.list-menu-item:hover {
+.listMenuItem:hover {
     background: grey;
+}
+
+.listMenuItem:is-active {
+    background: black;
+}
+
+.task {
+    background: black;
+    padding: 15px 20px;
+    border-radius: 5px;
+    margin-top: 10px;
 }

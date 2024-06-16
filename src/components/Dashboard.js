@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getProjects, getTasks } from '../services/api';
-import './Dashboard.css';
+import styles from './Dashboard.module.css';
 
 const Dashboard= () => {
     const [projects, setProjects] = useState([]);
@@ -18,25 +18,36 @@ const Dashboard= () => {
     }, []);
 
     return (
-        <div className = "wrapper">
-            <div className = "centered-content">
-                <div className = "projects-container">
-                    <div className = "sidebar">
-                        <h1 className = "title-has-text-primary">
+        <div className = {styles.wrapper}>
+            <div className = {styles.centeredContent}>
+                <div className = {styles.projectsContainer}>
+                    <div className = {styles.sidebar}>
+                        <h1 className = {styles.title}>
                             Projects
                         </h1>
-                        <div className = "list-menu">
-                            <a className = "list-menu-item">
-                                <p>Project 1</p>
-                            </a>
-                        </div>
 
+                        {/* Projects Elements*/}
+
+                        <div className = {styles.listMenu}>
+                            {projects.map(project => (
+                                <a key = {project._id} className = {styles.listMenuItem}>
+                                    <p>{project.projectName}</p>
+                                </a>
+                            ))}
+                        </div>
                     </div>
 
-                    <div className= "tasks-list-container">
-                        <h1 className = "title-has-text-primary">
+                    <div className = {styles.tasksListContainer}>
+                        <h1 className = {styles.title}>
                             Tasks
                         </h1>
+
+                        {/* Tasks Elements*/}
+                        {tasks.map(task => (
+                            <div key = {task._id} className = {styles.task}>
+                                <p>{task.taskName}</p>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>

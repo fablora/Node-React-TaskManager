@@ -2,13 +2,26 @@ import axios from "axios";
 
 const API_URL = 'http://localhost:5000';
 
+axios.interceptors.request.use(
+    config => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            config.headers['Authorization'] = 'Bearer ' + token;
+        }
+        return config;
+    },
+    error => {
+        return Promise.reject(error);
+    }
+);
+
 export const registerUser = async (userData) => {
-    const response = await axios.post(`${API_URL}/register`, userData);
+    const response = await axios.post(`${API_URL}/auth/register`, userData);
     return response.data;
 };
 
 export const loginUser = async (userData) => {
-    const response = await axios.post(`${API_URL}/login`, userData);
+    const response = await axios.post(`${API_URL}/auth/login`, userData);
     return response.data;
 };
 

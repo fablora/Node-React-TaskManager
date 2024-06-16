@@ -22,10 +22,16 @@ const userSchema = new mongoose.Schema({
         minlength: 6,
         validate: {
             validator: function (v) {
-                return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}$/.test(v) && !/\s/.test(v);
+                const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*[\]{}();:'",.<>?_\\\-+=|/~`])[A-Za-z\d!@#$%^&*[\]{}();:'",.<>?_\\\-+=|/~`]{6,}$/;
+                return regex.test(v) && !/\s/.test(v);
             },
-            message: props => '${props.value} is not a valid password. It must contain at least one uppercase letter, one lowercase letter, one digit, one special character, and no spaces.It must contain at least one uppercase letter, one lowercase letter, one digit, one special character, and no spaces.'
+            message: props => `${props.value} is not a valid password. It must contain at least one uppercase letter, one lowercase letter, one digit, one special character, and no spaces.`
         }
+    },
+    role: {
+        type: String,
+        enum: ['user', 'admin'],
+        default: 'user'
     } 
 }, {
     timestamps: true

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import './LoginRegister.css';
+import styles from './LoginRegister.module.css';
 import { loginUser } from "../services/api";
 import { FaUser, FaKey } from "react-icons/fa";
 
@@ -25,31 +25,31 @@ const Login = () => {
     };
 
     return (
-        <div className = "wrapper">
-            <div className = "form-box login">
+        <div className = {styles.wrapper}>
+            <div className = {styles.formBox}>
                 <form onSubmit = {handleSubmit}>
                     <h1>Login</h1>
-                    <div className = "input-box">
+                    <div className = {styles.inputBox}>
                         <input type = "email"
                         placeholder= "Email"
                         value = {email}
                         onChange = {(e) => setEmail(e.target.value)} required />
-                        <FaUser className="icon"/>
+                        <FaUser className = {styles.icon}/>
                     </div>
-                    <div className = "input-box">
+                    <div className = {styles.inputBox}>
                         <input type = "password"
                         placeholder= "Password"
                         value = {password}
                         onChange = {(e) => setPassword(e.target.value)} required />
-                        <FaKey className="icon"/>
+                        <FaKey className = {styles.icon}/>
                     </div>
 
-                    <div className = "remember-forgot">
+                    <div className = {styles.rememberForgot}>
                         <label><input type = "checkbox" /> Remembe me</label>
                         <a href = "#">Forgot password?</a>
                     </div>
                     <button type = "submit">Login</button>
-                    <div className = "register-link">
+                    <div className = {styles.registerLink}>
                         <p>Don't have an account? <Link to="/register">Register</Link></p>
                     </div>
                 </form>

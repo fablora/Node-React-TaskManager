@@ -1,20 +1,12 @@
-feat: Implement dashboard for user projects view and integrate frontend with backend
+feat: Add JWT authentication, project user assignment, and protected routes
 
-- Created frontend API service functions to fetch projects and tasks data
-  - Added `getProjects` and `getTasks` functions in `api.js`
-  
-- Set up routing for the dashboard
-  - Imported `Dashboard` component in routes
-  - Added route for `/dashboard` to render `Dashboard` component
+- server.js: Configured JWT secret from environment variables
+- authController.js: Implemented user registration and login with JWT
+- projectController.js: Added user assignment to project functionality
+- api.js: Set up Axios request interceptor to include JWT in headers
+- ProtectedRoute.js: Created a protected route component for authenticated access
+- Dashboard.js: Updated to fetch and display projects and tasks
+- dashboard.module.css: Added and styled layout for the dashboard with projects and tasks sections
+- adminDashboard.js: Created a bare-bones sketch for the admin user dashboard
 
-- Developed `Dashboard.js` component
-  - Utilized `getProjects` and `getTasks` functions to fetch and display projects and tasks
-  - Applied basic styling for dashboard layout in `Dashboard.css`
-
-- Styled `Dashboard.css` for user projects view
-  - Defined layout styles for wrapper, centered content, projects container, sidebar, tasks list container, and titles
-
-- Updated server routes in `server.js` to include project and task endpoints
-  - Integrated `authRoutes`, `projectRoutes`, and `taskRoutes` with respective paths
-
-- Fixed multiple backend integration issues
+Additionally, implemented error handling and styled various components for better UI/UX.

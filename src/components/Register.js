@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import './LoginRegister.css';
+import { Link, useNavigate } from "react-router-dom";
+import styles from './LoginRegister.module.css';
 import { registerUser } from "../services/api";
 import { MdEmail } from "react-icons/md";
 import { FaKey } from "react-icons/fa";
@@ -9,42 +9,47 @@ const Register = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
+    const [error, setError] = useState('');
+    const navigate = useNavigate(); 
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
             const userData = { email, password };
-            const response = await registerUser(userData);
+            await registerUser(userData);
             setMessage('Registration Succesful');
+            setError('');
+            navigate('/login');
         } catch (error) {
-            setMessage('There was an error dusing the resgistration ' + error.response.data);
+            setError(error.response?.data || 'There was an error during the registration');
         }
     };
 
     return (
-        <div className = "wrapper">
-            <div className = "form-box register">
+        <div className = {styles.wrapper}>
+            <div className = {styles.formBox}>
                 <form onSubmit = {handleSubmit}>
                     <h1>Register</h1>
-                    <div className = "input-box">
+                    {error && <p className = {styles.errorMessage}>{error}</p>}
+                    <div className = {styles.inputBox}>
                         <input type = "email"
                         placeholder = "Email" 
                         value = {email} 
                         onChange = {(e) => setEmail(e.target.value)} required />
-                        <MdEmail className="icon"/>
+                        <MdEmail className = {styles.icon}/>
                     </div>
-                    <div className = "input-box">
+                    <div className = {styles.inputBox}>
                         <input type = "password"
                         placeholder = "Password" 
                         value = {password} 
                         onChange = {(e) => setPassword(e.target.value)} required />
-                        <FaKey className="icon"/>
+                        <FaKey className = {styles.icon}/>
                     </div>
-                    <div className = "agree-terms">
+                    <div className = {styles.agreeTerms}>
                         <label><input type = "checkbox" /> I agree to the terms & conditions</label>
                     </div>
                     <button type = "submit">Register</button>
-                    <div className= "login-link">
+                    <div className= {styles.loginLink}>
                         <p> Already have an account? <Link to="/login">Login</Link></p>
                     </div>
                 </form>

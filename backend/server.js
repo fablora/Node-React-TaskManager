@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -11,6 +12,8 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
 
+const jwtSecret = process.env.JWT_SECRET;
+
 mongoose.connect('mongodb://localhost:27017/taskmanager', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -20,8 +23,7 @@ app.use(cors());
 app.use(express.json());
 
 // Routes here
-app.use('/login', authRoutes);
-app.use('/register', authRoutes);
+app.use('/auth', authRoutes);
 app.use('/projects', projectRoutes);
 app.use('/tasks', taskRoutes);
 
