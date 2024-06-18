@@ -7,6 +7,7 @@ const socketIo = require('socket.io');
 const authRoutes = require('./routes/authRoutes');
 const projectRoutes = require('./routes/projectRoutes');
 const taskRoutes = require('./routes/taskRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 const app = express();
 const server = http.createServer(app);
@@ -26,6 +27,7 @@ app.use(express.json());
 app.use('/auth', authRoutes);
 app.use('/projects', projectRoutes);
 app.use('/tasks', taskRoutes);
+app.use('/users', userRoutes);
 
 server.listen(5000, () => {
     console.log('Server is running on port 5000')

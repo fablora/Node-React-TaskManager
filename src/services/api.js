@@ -35,6 +35,11 @@ export const getProjects = async () => {
     return response.data;
 };
 
+export const getAllUsers = async () => {
+    const response = await axios.get(`${API_URL}/users`);
+    return response.data;
+}
+
 export const getTasks = async () => {
     const response = await axios.get(`${API_URL}/tasks`);
     return response.data;
@@ -47,5 +52,15 @@ export const getProjectByID = async (id) => {
 
 export const createTask = async (taskData) => {
     const response = await axios.post(`${API_URL}/tasks`, taskData);
+    return response.data;
+};
+
+export const assignUserToProject = async (userId, projectId) => {
+    const response = await axios.post(`${API_URL}/projects/assign`, { userId, projectId });
+    return response.data;
+};
+
+export const assignTaskToUser = async (userId, taskId) => {
+    const response = await axios.post(`${API_URL}/tasks/assign`, { userId, taskId });
     return response.data;
 };

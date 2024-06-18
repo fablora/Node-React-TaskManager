@@ -1,0 +1,120 @@
+.wrapper {
+    position: relative;
+    width: 1200px;
+    height: 800px;
+    background: transparent;
+    border: 2px solid #525252;
+    backdrop-filter: blur(30px);
+    border-radius: 10px;
+    color: aliceblue;
+}
+
+.wrapper .centeredContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.projectsContainer {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    max-width: 1200px;
+    max-height: 800px;    
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    width: 275px;
+    padding: 40px;
+    border: transparent;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.title {
+    font-family: 'cambria';
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #36454F;
+}
+
+.tasksListContainer {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 40px;
+}
+
+.titleHasTextPrimary{
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 600;
+}
+
+.listMenu {
+    margin-top: 15px;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.listMenuItem {
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    width: 100%;
+    margin-bottom: 5px;
+    padding: 5px;
+}
+
+.listMenuItem:hover {
+    background: grey;
+}
+
+.listMenuItem:is-active {
+    background: black;
+}
+
+.task {
+    background: black;
+    padding: 15px 20px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.button {
+    background: rgb(34, 34, 34);
+    color: aliceblue;
+    height: 35px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.button:hover {
+    opacity: 0.7;
+}
+
+.circleAddButton {
+    height: 50px;
+    width: 50px;
+    background: white;
+    position: absolute;
+    bottom: 35px;
+    right: 35px;
+    border-radius: 50%;
+    color: black;
+    font-size: 30px;
+    font-weight: 600;
+    font-family: 'Times-Roman';
+    cursor: pointer;
+}
+
+.circleAddButton:hover {
+    opacity: 0.7;
+}

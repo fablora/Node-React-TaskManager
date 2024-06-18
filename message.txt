@@ -1,12 +1,9 @@
-feat: Add JWT authentication, project user assignment, and protected routes
+feat: add userController and improve granularity with new models
 
-- server.js: Configured JWT secret from environment variables
-- authController.js: Implemented user registration and login with JWT
-- projectController.js: Added user assignment to project functionality
-- api.js: Set up Axios request interceptor to include JWT in headers
-- ProtectedRoute.js: Created a protected route component for authenticated access
-- Dashboard.js: Updated to fetch and display projects and tasks
-- dashboard.module.css: Added and styled layout for the dashboard with projects and tasks sections
-- adminDashboard.js: Created a bare-bones sketch for the admin user dashboard
-
-Additionally, implemented error handling and styled various components for better UI/UX.
+- Implemented userController with functions to get all users, assign users to projects, and assign tasks to users.
+- Created ProjectAssignment model to manage user-project assignments.
+- Created TaskAssignment model to manage user-task assignments.
+- Updated user routes to include the new getAllUsers controller function.
+- Developed CreateProjectForm component for frontend to handle project creation with form validation and submission.
+- Styled CreateProjectForm component for better UI/UX.
+- Updated server API and routes to incorporate new functionalities and models.
