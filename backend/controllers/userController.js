@@ -32,3 +32,13 @@ exports.assignTaskToUser = async (req, res) => {
         res.status(500).send(error);
     }
 };
+
+exports.getUsersByProject = async (req, res) => {
+    try {
+        const assignments = await ProjectAssignment.find({ projectId: req.params.projectId }).populate('userId');
+        const users = assignments.map(a => a.userId);
+        res.send(users);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+};

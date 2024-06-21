@@ -18,3 +18,21 @@ exports.getTasks = async (req, res) => {
         res.status(500).send(error);
     }
 };
+
+exports.getTasksByProject = async (req, res) => {
+    try {
+        const tasks = await Task.find({ projectId: req.params.projectId });
+        res.send(tasks);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+};
+
+exports.getTasksByUserAndProject = async (req, res) => {
+    try {
+        const tasks = await Task.find({ projectId: req.params.projectId, assignedTo: req.params.userId });
+        res.send(tasks);
+    } catch (error){
+        res.status(500).send(error);
+    }
+};

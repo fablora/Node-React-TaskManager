@@ -1,9 +1,8 @@
-feat: add userController and improve granularity with new models
+feat: Add task and user management features to project
 
-- Implemented userController with functions to get all users, assign users to projects, and assign tasks to users.
-- Created ProjectAssignment model to manage user-project assignments.
-- Created TaskAssignment model to manage user-task assignments.
-- Updated user routes to include the new getAllUsers controller function.
-- Developed CreateProjectForm component for frontend to handle project creation with form validation and submission.
-- Styled CreateProjectForm component for better UI/UX.
-- Updated server API and routes to incorporate new functionalities and models.
+- Implemented getTasksByProject and getTasksByUserAndProject functions in taskController
+- Added getUsersByProject function in userController
+- Created CreateTaskForm component with task creation and user assignment functionality
+- Added routes for task and user endpoints
+- Integrated new routes into admin dashboard
+- Updated api.js to support new endpoints

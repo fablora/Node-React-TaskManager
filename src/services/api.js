@@ -38,10 +38,25 @@ export const getProjects = async () => {
 export const getAllUsers = async () => {
     const response = await axios.get(`${API_URL}/users`);
     return response.data;
-}
+};
+
+export const getTasksByProject = async (projectId) => {
+    const response = await axios.get(`${API_URL}/tasks/project/${projectId}`);
+    return response.data;
+};
+
+export const getTasksByUserAndProject = async (userId, projectId) => {
+    const response = await axios.get(`${API_URL}/tasks/user/${userId}/project/${projectId}`);
+    return response.data;
+};
 
 export const getTasks = async () => {
     const response = await axios.get(`${API_URL}/tasks`);
+    return response.data;
+};
+
+export const getUsersByProject = async (projectId) => {
+    const response = await axios.get(`${API_URL}/projects/${projectId}/users`);
     return response.data;
 };
 

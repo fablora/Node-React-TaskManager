@@ -36,12 +36,20 @@
     background: rgba(0, 0, 0, 0.3);
 }
 
+.usersContainer {
+    display: flex;
+    flex-direction: column;
+    width: 275px;
+    padding: 40px;
+    border-right: 2px solid #525252;    
+}
+
 .title {
     font-family: 'cambria';
     font-size: 24px;
     text-transform: uppercase;
     letter-spacing: 2px;
-    color: #36454F;
+    color: #e1e3e6;
 }
 
 .tasksListContainer {
@@ -71,6 +79,7 @@
     width: 100%;
     margin-bottom: 5px;
     padding: 5px;
+    color: #e1e3e6;
 }
 
 .listMenuItem:hover {
@@ -90,7 +99,7 @@
 
 .button {
     background: rgb(34, 34, 34);
-    color: aliceblue;
+    color: #e1e3e6;
     height: 35px;
     border-radius: 8px;
     cursor: pointer;
@@ -103,12 +112,12 @@
 .circleAddButton {
     height: 50px;
     width: 50px;
-    background: white;
+    background: #e1e3e6;
     position: absolute;
     bottom: 35px;
     right: 35px;
     border-radius: 50%;
-    color: black;
+    color: #595856;
     font-size: 30px;
     font-weight: 600;
     font-family: 'Times-Roman';

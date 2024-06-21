@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import styles from './AdminDashboard.module.css';
-import { getAllUsers, createProject, createTask, assignUserToProject, assignTaskToUser, getProjects, getTasks } from '../../services/api';
+import { getAllUsers, createProject, createTask, assignUserToProject, assignTaskToUser, getProjects, getTasks, getTasksByProject } from '../../services/api';
 import CreateProjectForm from '../Project/CreateProject';
+import CreateTaskForm from '../Task/CreateTask';
 
 const AdminDashboard = () => {
     const [users, setUsers] = useState([]);
     const [projects, setProjects] = useState([]);
     const [tasks, setTasks] = useState([]);
+    const [selectedProject, setSelectedProject] = useState(null);
+    const [selectedUser, setSelectedUser] = useState(null);
     const [showProjectForm, setShowProjectForm] = useState(false);
+    const [showTaskForm, setShowTaskForm] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -23,8 +27,13 @@ const AdminDashboard = () => {
         fetchData();
     }, []);
 
-    const handleCreateProject = (newProject) => {
-        setProjects([...projects, newProject]);
+    const handleCreateProject = async (newProject) => {
+        const createdProject = await createProject(newProject);
+        setProjects([...projects, createdProject]);
+    };
+    const handleCreateTask = async (newTask) => {
+        const createdTask = await createTask(newTask);
+        setTasks([...tasks, createdTask]);
     };
 
     const handleAssignUserToProject = async (projectId, userId) => {
@@ -34,6 +43,20 @@ const AdminDashboard = () => {
     const handleAssignTaskToUser = async (taskId, userId) => {
         await assignTaskToUser(taskId, userId);
     };
+    const handleProjectClick = async (project) => {
+        setSelectedProject(project);
+        setSelectedUser(null);
+        const projectTasks = await getTasksByProject(project._id);
+        setTasks(projectTasks);
+    };
+
+    const handleUserClick = (user) => {
+        setSelectedUser(user);
+    };
+
+    const filteredTasks = selectedUser
+        ? tasks.filter(task => task.assignedTo === selectedUser._id)
+        : tasks;
 
     return (
         <div className = {styles.wrapper}>
@@ -48,7 +71,7 @@ const AdminDashboard = () => {
 
                         <div className = {styles.listMenu}>
                             {projects.map(project => (
-                                <a key = {project._id} className = {styles.listMenuItem}>
+                                <a key = {project._id} className = {styles.listMenuItem} onClick = {() => handleProjectClick(project)}>
                                     <p>{project.projectName}</p>
                                 </a>
                             ))}
@@ -56,29 +79,55 @@ const AdminDashboard = () => {
                         <button className = {styles.button} type = 'button' onClick={() => setShowProjectForm(true)}>+ New Project</button>
                     </div>
 
-                    <div className = {styles.tasksListContainer}>
-                        <h1 className = {styles.title}>
-                            Tasks
-                        </h1>
+                    {/* Users Elements*/}
 
-                        {/* Tasks Elements*/}
-                        {tasks.map(task => (
-                            <div key = {task._id} className = {styles.task}>
-                                <p>{task.taskName}</p>
+                    {selectedProject && (
+                        <div className = {styles.usersContainer}>
+                            <h1 className = {styles.title}>
+                                Users
+                            </h1>
+                            <div className = {styles.listMenu}>
+                                {users.map(user => (
+                                    <a key = {user._id} className = {styles.listMenuItem} onClick = {() => handleUserClick(user)}>
+                                        <p>{user.email}</p>
+                                    </a>
+                                ))}
                             </div>
-                        ))}
-                        <button className = {styles.circleAddButton} type = 'button'>T</button>
-                    </div>
+                        </div>
+                    )}
+
+                    {/* Tasks Elements*/}
+
+                    {selectedProject && (
+                        <div className = {styles.tasksListContainer}>
+                            <h1 className = {styles.title}>
+                                Tasks
+                            </h1>
+                            {filteredTasks.map(task => (
+                                <div key = {task._id} className = {styles.task}>
+                                    <p>{task.taskTitle}</p>
+                                </div>
+                            ))}
+                            <button className={styles.circleAddButton} type='button' onClick={() => setShowTaskForm(true)}>T</button>
+                        </div>
+                    )}                    
                 </div>
             </div>
             {showProjectForm && (
                 <CreateProjectForm
                     onClose = {() => setShowProjectForm(false)}
-                    onCreate = {handleCreateProject}
+                    onCreate={handleCreateProject}
+                />    
+            )}
+            {showTaskForm && (
+                <CreateTaskForm
+                    projectId = {selectedProject._id}
+                    onClose = {() => setShowTaskForm(false)}
+                    onCreate = {handleCreateTask}
                 />
             )}
         </div>
     );
-};
+};            
 
 export default AdminDashboard;

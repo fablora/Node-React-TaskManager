@@ -29,7 +29,7 @@ const CreateProjectForm = ({ onClose, onCreate }) => {
     return (
         <div className = {styles.modal}>
             <div className = {styles.modalContent}>
-                <h2>Create New Project</h2>
+                <h2>New Project</h2>
                 <form onSubmit = {handleSubmit}>
                     <div>
                         <label>Project Name:</label>
@@ -58,7 +58,7 @@ const CreateProjectForm = ({ onClose, onCreate }) => {
                             required
                         />
                     </div>
-                    <button className = {styles.buttonCreate} type = "submit">Create</button>
+                    <button className = {styles.buttonCreate} type = "submit">Add</button>
                     <button className = {styles.buttonCancel} type = "button" onClick = {onClose}>Cancel</button>
                 </form>
             </div>
