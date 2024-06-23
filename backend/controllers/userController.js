@@ -14,6 +14,10 @@ exports.getAllUsers = async (req, res) => {
 exports.assignUserToProject = async (req, res) => {
     try {
         const { userId, projectId } = req.body;
+        const existingAssignment = await ProjectAssignment.findOne({ userId, projectId });
+        if (existingAssignment) {
+            return res.status(200).send(existingAssignment);
+        }
         const assignment = new ProjectAssignment({ userId, projectId });
         await assignment.save();
         res.status(201).send(assignment);

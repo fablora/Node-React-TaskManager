@@ -12,6 +12,8 @@ const AdminDashboard = () => {
     const [selectedUser, setSelectedUser] = useState(null);
     const [showProjectForm, setShowProjectForm] = useState(false);
     const [showTaskForm, setShowTaskForm] = useState(false);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [assignedUsers, setAssignedUsers] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -37,7 +39,8 @@ const AdminDashboard = () => {
     };
 
     const handleAssignUserToProject = async (projectId, userId) => {
-        await assignUserToProject(projectId, userId);
+        await assignUserToProject(userId, projectId);
+        setAssignedUsers([...assignedUsers, userId]);
     };
 
     const handleAssignTaskToUser = async (taskId, userId) => {
@@ -48,15 +51,23 @@ const AdminDashboard = () => {
         setSelectedUser(null);
         const projectTasks = await getTasksByProject(project._id);
         setTasks(projectTasks);
+        setAssignedUsers(project.assignedUsers || []);
     };
 
-    const handleUserClick = (user) => {
-        setSelectedUser(user);
+    const handleUserClick = async (user) => {
+        if (!assignedUsers.includes(user._id)) {
+            await handleAssignUserToProject(selectedProject._id, user._id);
+            setAssignedUsers(...assignedUsers, user._id);
+        }
     };
 
     const filteredTasks = selectedUser
         ? tasks.filter(task => task.assignedTo === selectedUser._id)
         : tasks;
+
+    const filteredUsers = users.filter(user =>
+        user.email.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     return (
         <div className = {styles.wrapper}>
@@ -71,7 +82,7 @@ const AdminDashboard = () => {
 
                         <div className = {styles.listMenu}>
                             {projects.map(project => (
-                                <a key = {project._id} className = {styles.listMenuItem} onClick = {() => handleProjectClick(project)}>
+                                <a key = {project._id} className = {styles.listMenuItemProjects} onClick = {() => handleProjectClick(project)}>
                                     <p>{project.projectName}</p>
                                 </a>
                             ))}
@@ -86,10 +97,21 @@ const AdminDashboard = () => {
                             <h1 className = {styles.title}>
                                 Users
                             </h1>
-                            <div className = {styles.listMenu}>
-                                {users.map(user => (
-                                    <a key = {user._id} className = {styles.listMenuItem} onClick = {() => handleUserClick(user)}>
-                                        <p>{user.email}</p>
+                            <input
+                                type = "text"
+                                placeholder = 'Search User...'
+                                className = {styles.searchBar}
+                                value = {searchTerm}
+                                onChange = {(e) => setSearchTerm(e.target.value)}
+                            />
+                            <div className = {styles.listMenuUsers}>
+                                {filteredUsers.sort((a, b) => assignedUsers.includes(b._id) - assignedUsers.includes(a._id)).map(user => (
+                                    <a 
+                                        key = {user._id}
+                                        className = {`${styles.listMenuItemUsers} ${assignedUsers.includes(user._id) ? styles.active: ''}`}
+                                        onClick = {() => handleUserClick(user)}
+                                    >
+                                        <p>{user.email}</p>                                        
                                     </a>
                                 ))}
                             </div>

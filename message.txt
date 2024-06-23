@@ -1,8 +1,23 @@
-feat: Add task and user management features to project
+feat: Enhanced task creation and user assignment functionalities
 
-- Implemented getTasksByProject and getTasksByUserAndProject functions in taskController
-- Added getUsersByProject function in userController
-- Created CreateTaskForm component with task creation and user assignment functionality
-- Added routes for task and user endpoints
-- Integrated new routes into admin dashboard
-- Updated api.js to support new endpoints
+1. Updated API:
+- Enhanced `createTask` function to include error handling and set JSON headers.
+
+2. CreateTask Component:
+- Improved user fetch and task creation logic with error handling.
+- Included `assignedTo` field in task creation payload and updated the form to fetch and display project-specific users.
+
+3. Admin Dashboard:
+- Enhanced project, user, and task management interface.
+- Added search functionality for users.
+- Implemented user assignment to projects with active status indication.
+- Improved task filtering based on selected users.
+
+4. User Controller:
+- Enhanced `assignUserToProject` to check for existing assignments before creating new ones.
+
+5. Task Controller:
+- Updated `createTask` to handle additional task fields and improved error logging.
+
+6. Server:
+- Enabled URL-encoded data parsing middleware.

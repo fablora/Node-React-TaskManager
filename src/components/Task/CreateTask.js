@@ -11,8 +11,13 @@ const CreateTaskForm = ({ projectId, onClose, onCreate }) => {
 
     useEffect(() => {
         const fetchUsers = async () => {
-            const usersData = await getUsersByProject(projectId);
-            setUsers(usersData)
+            try {
+                const usersData =  await getUsersByProject(projectId);
+                console.log('Fetched users:', usersData);
+                setUsers(usersData);
+            } catch (error) {
+                console.error('Error fetching users:', error)
+            }
         };
         fetchUsers();
     }, [projectId]);
@@ -23,14 +28,21 @@ const CreateTaskForm = ({ projectId, onClose, onCreate }) => {
             taskTitle,
             taskDescription,
             dueDate,
-            projectId
+            projectId, 
+            assignedTo
         };
-        const createdTask = await createTask(newTask);
-        if (assignedTo) {
-            await assignTaskToUser(createdTask._id, assignedTo)
+        console.log('Creating task with data:', newTask);
+
+        try {
+            const createdTask = await createTask(newTask);
+            if (assignedTo) {
+                await assignTaskToUser(createdTask._id, assignedTo)
+            }
+            onCreate(createdTask);
+            onClose();
+        } catch (error) {
+            console.error('Error creating task:', error);
         }
-        onCreate(createTask);
-        onClose();
     };
 
     return (

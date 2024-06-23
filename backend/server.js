@@ -22,6 +22,7 @@ mongoose.connect('mongodb://localhost:27017/taskmanager', {
 
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Routes here
 app.use('/auth', authRoutes);

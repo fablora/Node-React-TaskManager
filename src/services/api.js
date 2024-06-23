@@ -66,8 +66,17 @@ export const getProjectByID = async (id) => {
 };
 
 export const createTask = async (taskData) => {
-    const response = await axios.post(`${API_URL}/tasks`, taskData);
-    return response.data;
+    try {
+        const response = await axios.post(`${API_URL}/tasks`, taskData, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error in createTask API:', error.response.data);
+        throw error;
+    }
 };
 
 export const assignUserToProject = async (userId, projectId) => {
