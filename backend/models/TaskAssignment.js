@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const taskAssigmentSchema = new mongoose.Schema({
+const taskAssignmentSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
@@ -19,5 +19,5 @@ const taskAssigmentSchema = new mongoose.Schema({
     timestamps: true
 });
 
-const TaskAssigment = mongoose.model('TaskAssigment', taskAssigmentSchema);
-module.exports = TaskAssigment;
+const TaskAssignment = mongoose.model('TaskAssignment', taskAssignmentSchema);
+module.exports = TaskAssignment;

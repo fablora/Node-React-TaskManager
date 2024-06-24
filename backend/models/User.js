@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
+const ProjectAssignment = require('./ProjectAssignment');
+const TaskAssignment = require('./TaskAssignment');
 
 const userSchema = new mongoose.Schema({
 
@@ -35,6 +37,12 @@ const userSchema = new mongoose.Schema({
     } 
 }, {
     timestamps: true
+});
+
+userSchema.pre('remove', async function (next) {
+    await ProjectAssignment.deleteMany({ userId: this_.id });
+    await TaskAssignment.deleteMany({ userId: thuis._id });
+    next();
 });
 
 const User = mongoose.model('User', userSchema)

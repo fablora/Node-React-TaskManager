@@ -1,23 +1,12 @@
-feat: Enhanced task creation and user assignment functionalities
+Fix user registration bug, implement delete functions, and resolve duplicate post request issue
 
-1. Updated API:
-- Enhanced `createTask` function to include error handling and set JSON headers.
+- Fix bug in user registration by including environment variable configuration in the auth controller:
+  - require('dotenv').config();
+  - const jwtSecret = process.env.JWT_SECRET;
 
-2. CreateTask Component:
-- Improved user fetch and task creation logic with error handling.
-- Included `assignedTo` field in task creation payload and updated the form to fetch and display project-specific users.
+- Implement delete functions for user, task, and project controller
 
-3. Admin Dashboard:
-- Enhanced project, user, and task management interface.
-- Added search functionality for users.
-- Implemented user assignment to projects with active status indication.
-- Improved task filtering based on selected users.
+- Include pre-hooks in user, project, and task models to handle cascading deletions:
 
-4. User Controller:
-- Enhanced `assignUserToProject` to check for existing assignments before creating new ones.
-
-5. Task Controller:
-- Updated `createTask` to handle additional task fields and improved error logging.
-
-6. Server:
-- Enabled URL-encoded data parsing middleware.
+- Fix bug where both AdminDash and CreateProject components were sending duplicate post requests:
+- Moved the full post request logic to the CreateProject component to avoid redundancy and ensure single request handling.

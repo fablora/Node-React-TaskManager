@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const TaskAssignment = require('./TaskAssignment');
 
 const taskSchema = new mongoose.Schema({
 
@@ -32,6 +33,11 @@ const taskSchema = new mongoose.Schema({
     } 
 }, {
     timestamps: true
+});
+
+taskSchema.pre('remove', async function (next) {
+    await TaskAssignment.deleteMany({ taskId: this._id });
+    next();
 });
 
 const Task = mongoose.model('Task', taskSchema);

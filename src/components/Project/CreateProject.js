@@ -6,9 +6,15 @@ const CreateProjectForm = ({ onClose, onCreate }) => {
     const [projectName, setProjectName] = useState('');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        e.stopPropagation();
+
+        if (isSubmitting) return;
+        setIsSubmitting(true);
+
         const projectData ={
             projectName,
             projectTimeline: {
@@ -23,6 +29,8 @@ const CreateProjectForm = ({ onClose, onCreate }) => {
             onClose();
         } catch (error) {
             console.error('An error occured while creating project:', error);
+        } finally {
+            setIsSubmitting (false);
         }
     };
 

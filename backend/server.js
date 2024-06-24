@@ -13,8 +13,6 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
 
-const jwtSecret = process.env.JWT_SECRET;
-
 mongoose.connect('mongodb://localhost:27017/taskmanager', {
     useNewUrlParser: true,
     useUnifiedTopology: true,

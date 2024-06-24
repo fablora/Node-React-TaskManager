@@ -49,6 +49,7 @@
     flex-direction: column;
     flex-grow: 1;
     padding: 40px;
+    color: white;
 }
 
 .titleHasTextPrimary{
@@ -62,6 +63,7 @@
     margin-top: 15px;
     flex-direction: column;
     flex-grow: 1;
+    color: white;
 }
 
 .listMenuItem {
@@ -71,6 +73,7 @@
     width: 100%;
     margin-bottom: 5px;
     padding: 5px;
+    color: white;
 }
 
 .listMenuItem:hover {
@@ -79,6 +82,7 @@
 
 .listMenuItem:is-active {
     background: black;
+    
 }
 
 .task {
@@ -86,4 +90,5 @@
     padding: 15px 20px;
     border-radius: 5px;
     margin-top: 10px;
+    color: white;
 }

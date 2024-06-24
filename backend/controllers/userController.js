@@ -1,6 +1,6 @@
 const User = require('../models/User');
 const ProjectAssignment = require('../models/ProjectAssignment');
-const TaskAssignment = require('../models/TaskAssigment');
+const TaskAssignment = require('../models/TaskAssignment');
 
 exports.getAllUsers = async (req, res) => {
     try {
@@ -43,6 +43,20 @@ exports.getUsersByProject = async (req, res) => {
         const users = assignments.map(a => a.userId);
         res.send(users);
     } catch (error) {
+        res.status(500).send(error);
+    }
+};
+
+exports.deleteUser = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+        if (!user) {
+            return res.status(404).send();
+        }
+        await user.remove();
+        res.send({ message: 'User and related assignments deleted' });
+    } catch (error) {
+        console.error('Error deleting users:', error);
         res.status(500).send(error);
     }
 };

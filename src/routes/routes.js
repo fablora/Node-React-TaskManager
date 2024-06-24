@@ -14,7 +14,6 @@ function AppRoutes() {
         <Router>
             <Routes>
                 <Route path = '/' element = {<Home />} />
-                <Route path = '/projects/:id' element = {<Project />} />
                 <Route path = '/register' element = {<Register />} />
                 <Route path = '/login' element = {<Login />} />
                 <Route path = '/dashboard' element = {<Dashboard/>} /> {/* element = {<ProtectedRoute element = {Dashboard} />} ---- element = {<Dashboard/>} */}

@@ -1,5 +1,6 @@
-const { type } = require('@testing-library/user-event/dist/type');
 const mongoose = require('mongoose');
+const Task = require('./Task');
+const ProjectAssignment = require('./ProjectAssignment');
 
 const projectSchema = new mongoose.Schema({
     
@@ -23,6 +24,12 @@ const projectSchema = new mongoose.Schema({
         type: mongoose.Schema.ObjectId, 
         ref: 'Task'
     }]
+});
+
+projectSchema.pre('remove', async function(next) {
+    await Task.deleteMany({ projectId: this._id });
+    await ProjectAssignment.deleteMany({ projectId: this._id });
+    next();
 });
 
 

@@ -3,6 +3,8 @@ import styles from './AdminDashboard.module.css';
 import { getAllUsers, createProject, createTask, assignUserToProject, assignTaskToUser, getProjects, getTasks, getTasksByProject } from '../../services/api';
 import CreateProjectForm from '../Project/CreateProject';
 import CreateTaskForm from '../Task/CreateTask';
+import { IoIosAddCircleOutline as addIcon } from "react-icons/io";
+import { MdRemoveCircleOutline as removeIcon } from "react-icons/md";
 
 const AdminDashboard = () => {
     const [users, setUsers] = useState([]);
@@ -29,10 +31,6 @@ const AdminDashboard = () => {
         fetchData();
     }, []);
 
-    const handleCreateProject = async (newProject) => {
-        const createdProject = await createProject(newProject);
-        setProjects([...projects, createdProject]);
-    };
     const handleCreateTask = async (newTask) => {
         const createdTask = await createTask(newTask);
         setTasks([...tasks, createdTask]);
@@ -138,7 +136,7 @@ const AdminDashboard = () => {
             {showProjectForm && (
                 <CreateProjectForm
                     onClose = {() => setShowProjectForm(false)}
-                    onCreate={handleCreateProject}
+                    onCreate={(newProject) => setProjects([...projects, newProject])}
                 />    
             )}
             {showTaskForm && (

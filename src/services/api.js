@@ -26,8 +26,13 @@ export const loginUser = async (userData) => {
 };
 
 export const createProject = async (projectData) => {
-    const response = await axios.post(`${API_URL}/projects`, projectData);
-    return response.data;
+    try {
+        const response = await axios.post(`${API_URL}/projects`, projectData);
+        return response.data;
+    } catch (error) {
+        console.error('Error in createProject API:', error.response.data);
+        throw error;
+    }
 };
 
 export const getProjects = async () => {

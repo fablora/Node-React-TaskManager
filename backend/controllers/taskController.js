@@ -48,3 +48,17 @@ exports.getTasksByUserAndProject = async (req, res) => {
         res.status(500).send(error);
     }
 };
+
+exports.deleteTask = async (req, res) => {
+    try {
+        const task = await Task.findById(req.paramd.id);
+        if (!task) {
+            return res.status(404).send();
+        }
+        await task.remove();
+        res.send({ message: 'Task and related assignments deleted' });
+    } catch (error) {
+        console.error('Error deleting tasks:', error);
+        res.status(500).send(error);
+    }
+};
