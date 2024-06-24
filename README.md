@@ -1,70 +1,119 @@
-# Getting Started with Create React App
+<a name="readme-top"></a>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
 
-## Available Scripts
+  <h3 align="center">Task Manager</h3>
 
-In the project directory, you can run:
+  <p align="center">
+    <a href="https://github.com/fablora/FinanceMinder"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://github.com/fablora/task-manager">View Demo</a>
+    ·
+    <a href="https://github.com/fablora/task-manager/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/fablora/task-manager/issues">Request Feature</a>
+  </p>
+</div>
 
-### `npm start`
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li><a href="#features">Features</a></li> 
+    <li><a href="#setup-and-installation">Setup and Installation</a></li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+  </ol>
+</details>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+<!-- ABOUT THE PROJECT -->
+## About The Project
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+A full-stack task management application built with Express, MongoDB, Node.js, and React.js. The application allows admin users to create projects, assign users to projects, and assign tasks to users. Regular users can update the status of their tasks, which then triggers a review from the admin before the task status is marked as completed.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### `npm run build`
+### Built With
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+*  **Backend:** &nbsp;&nbsp; ![Node.js](https://img.shields.io/badge/Node.js-black?logo=Node.js) &nbsp;&nbsp;![Express](https://img.shields.io/badge/Express-black?logo=Express) &nbsp;&nbsp;![MongoDB](https://img.shields.io/badge/MongoDB-black?logo=MongoDB) &nbsp;&nbsp;![Static Badge](https://img.shields.io/badge/Mongoose-black?logo=Mongoose)
+* **Frontend:** &nbsp;&nbsp; ![Static Badge](https://img.shields.io/badge/React-black?logo=react)
+* **Real-Time Communication:** &nbsp;&nbsp; ![Static Badge](https://img.shields.io/badge/Sokcet.io-black?logo=Socket.io)
+* **Authentication:** &nbsp;&nbsp; ![Static Badge](https://img.shields.io/badge/JWT-black?logo=jwt)
+* **Styling:** &nbsp;&nbsp; ![Static Badge](https://img.shields.io/badge/CSS-black?logo=CSS)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Features
 
-### `npm run eject`
+* **User Authentication:** Register and login functionalities using JWT for authentication
+* **Project Management:** Create, view, and delete projects
+* **Task Management:** Create, view, and delete tasks associated with projects
+* **User Management:** Admins can assign users to projects and tasks
+* **Real-time Updates:** Task status updates trigger notifications using Socket.io
+* **Role-based Access Control:** Admin and user roles with different permissions
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+<!-- GETTING STARTED -->
+## Setup and Installation
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### 1. Clone the repository
+```
+git clone https://github.com/yourusername/task-manager.git
+```
+```
+cd task-manager
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+### 2. Backend Setup
+#### Navigate to the backend directory and install dependencies:
+```
+cd backend
+```
+```
+npm install
+```
+#### Create a .env file and add your MongoDB URI and JWT secret:
+```
+MONGO_URI=mongodb://localhost:27017/taskmanager
+```
+```
+JWT_SECRET=your_jwt_secret
+```
+#### Start the backend server:
+```
+npm start
+```
+### 3. Frontend Setup
+#### On the frontend directory
+```
+npm install
+```
+#### Start the frontend development server
+```
+npm start
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Usage 
+* **Admin Dashboard:** Admins can create projects, assign users to projects, and assign tasks to users
+* **User Dashboard:** Users can view their assigned projects and tasks, and update task statuses
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+<!-- ROADMAP -->
+## Roadmap
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Additional Features
+- **Protected Routes:** Implement additional route protections for enhanced security
+- **Complete CRUD Operations:** Finalise CRUD functionality in the admin dashboard
+- **Task Status Review:** Implement a feature for admins to review and approve task status changes
+- **UI Enhancements:** Improve the user interface for better user experience
