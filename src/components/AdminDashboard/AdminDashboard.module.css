@@ -60,6 +60,22 @@
     padding: 40px;
 }
 
+.tasksHeaders {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    font-weight: bold;
+}
+
+.task {
+    display: flex;
+    justify-content: space-between;
+    background: black;
+    padding: 15px 20px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
 .titleHasTextPrimary{
     font-size: 20px;
     text-transform: uppercase;
@@ -98,12 +114,60 @@
 .listMenuItemUsers {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     border-radius: 5px;
     width: 100%;
     margin-bottom: 5px;
     padding: 10px;
     color: #5C5C5C;
     cursor: pointer;
+    gap: 10px;
+}
+
+.userButtons {
+    display: inline-block;
+    margin-left: auto;  
+}
+
+.addUserButton, .removeUserButton {
+    height: 22px;
+    width: 22px;
+    padding: 0px;
+    border-radius: 50%;
+    color: white;
+    font-size: 1em;
+    font-weight: 600;
+    display: inline-flex;
+    justify-content: center;   
+    vertical-align: middle;
+    font-family: 'Times-Roman';
+    cursor: pointer;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    border: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.addUserButton {
+    background: linear-gradient(to bottom, #4CAF50, #388E3C);
+    line-height: 1.4;
+    margin-right: 5px;
+}
+
+.removeUserButton {
+    background: linear-gradient(to bottom, #F44336, #ce261b);
+    line-height: 1.2;
+}
+
+.addUserButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(to bottom, #66BB6A, #43A047);
+}
+
+.removeUserButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(to bottom, #f86055, #d1372c);
 }
 
 .listMenuItemProjects:hover, .listMenuItemUsers:hover {
@@ -113,13 +177,6 @@
 .listMenuItemUsers.active, .listMenuItemProjects.active {
     background: #d3d3d3;
     font-weight: bold;
-}
-
-.task {
-    background: black;
-    padding: 15px 20px;
-    border-radius: 5px;
-    margin-top: 10px;
 }
 
 .button {

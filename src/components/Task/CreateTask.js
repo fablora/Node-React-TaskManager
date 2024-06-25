@@ -24,21 +24,21 @@ const CreateTaskForm = ({ projectId, onClose, onCreate }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const newTask = {
+        const taskData = {
             taskTitle,
             taskDescription,
             dueDate,
             projectId, 
             assignedTo
         };
-        console.log('Creating task with data:', newTask);
+        console.log('Creating task with data:', taskData);
 
         try {
-            const createdTask = await createTask(newTask);
+            const newTask = await createTask(taskData);
             if (assignedTo) {
-                await assignTaskToUser(createdTask._id, assignedTo)
+                await assignTaskToUser(newTask._id, assignedTo)
             }
-            onCreate(createdTask);
+            onCreate(newTask);
             onClose();
         } catch (error) {
             console.error('Error creating task:', error);

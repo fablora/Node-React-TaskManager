@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styles from './AdminDashboard.module.css';
-import { getAllUsers, createProject, createTask, assignUserToProject, assignTaskToUser, getProjects, getTasks, getTasksByProject } from '../../services/api';
+import { getAllUsers, assignUserToProject, getProjects, getTasks, getTasksByProject } from '../../services/api';
 import CreateProjectForm from '../Project/CreateProject';
 import CreateTaskForm from '../Task/CreateTask';
-import { IoIosAddCircleOutline as addIcon } from "react-icons/io";
-import { MdRemoveCircleOutline as removeIcon } from "react-icons/md";
+import TaskTable from '../Task/TaskTable';
 
 const AdminDashboard = () => {
     const [users, setUsers] = useState([]);
@@ -31,19 +30,11 @@ const AdminDashboard = () => {
         fetchData();
     }, []);
 
-    const handleCreateTask = async (newTask) => {
-        const createdTask = await createTask(newTask);
-        setTasks([...tasks, createdTask]);
-    };
-
     const handleAssignUserToProject = async (projectId, userId) => {
         await assignUserToProject(userId, projectId);
         setAssignedUsers([...assignedUsers, userId]);
     };
 
-    const handleAssignTaskToUser = async (taskId, userId) => {
-        await assignTaskToUser(taskId, userId);
-    };
     const handleProjectClick = async (project) => {
         setSelectedProject(project);
         setSelectedUser(null);
@@ -57,6 +48,16 @@ const AdminDashboard = () => {
             await handleAssignUserToProject(selectedProject._id, user._id);
             setAssignedUsers(...assignedUsers, user._id);
         }
+    };
+
+    const getUserEmail = (userId) => {
+        const user = users.find(user => user._id === userId);
+        return user ? user.email : 'Unknown User';
+    }
+
+    const formatDate = (dateString) => {
+        const options = { day: '2-digit', month: '2-digit', year: 'numeric'};
+        return new Date(dateString).toLocaleDateString('en-AU', options);
     };
 
     const filteredTasks = selectedUser
@@ -104,13 +105,16 @@ const AdminDashboard = () => {
                             />
                             <div className = {styles.listMenuUsers}>
                                 {filteredUsers.sort((a, b) => assignedUsers.includes(b._id) - assignedUsers.includes(a._id)).map(user => (
-                                    <a 
+                                    <div 
                                         key = {user._id}
-                                        className = {`${styles.listMenuItemUsers} ${assignedUsers.includes(user._id) ? styles.active: ''}`}
-                                        onClick = {() => handleUserClick(user)}
+                                        className = {`${styles.listMenuItemUsers} ${assignedUsers.includes(user._id) ? styles.active: ''}`}                                        
                                     >
-                                        <p>{user.email}</p>                                        
-                                    </a>
+                                        <p>{user.email}</p>
+                                        <div className = {styles.userButtons}>
+                                            <button className = {styles.addUserButton} onClick = {() => handleUserClick(user)}>+</button>
+                                            <button className = {styles.removeUserButton} onClick = {() => handleUserClick(user)}>x</button>
+                                        </div>                                       
+                                    </div>
                                 ))}
                             </div>
                         </div>
@@ -123,11 +127,7 @@ const AdminDashboard = () => {
                             <h1 className = {styles.title}>
                                 Tasks
                             </h1>
-                            {filteredTasks.map(task => (
-                                <div key = {task._id} className = {styles.task}>
-                                    <p>{task.taskTitle}</p>
-                                </div>
-                            ))}
+                            <TaskTable tasks = {tasks} users = {users} />
                             <button className={styles.circleAddButton} type='button' onClick={() => setShowTaskForm(true)}>T</button>
                         </div>
                     )}                    
@@ -143,7 +143,7 @@ const AdminDashboard = () => {
                 <CreateTaskForm
                     projectId = {selectedProject._id}
                     onClose = {() => setShowTaskForm(false)}
-                    onCreate = {handleCreateTask}
+                    onCreate = {(newTask) => setTasks([...tasks, newTask])}
                 />
             )}
         </div>
