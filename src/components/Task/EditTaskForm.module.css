@@ -17,7 +17,7 @@
     border: 1px outset;
     border-radius: 5px;
     width: 450px;
-    height: 540px;
+    height: 620px;
     color: #e1e3e6;
     font-family: 'cambria';
     font-size: 20px;
@@ -51,7 +51,7 @@
     border-radius: 5px;
 }
 
-.buttonCreate, .buttonCancel {
+.buttonEdit, .buttonCancel {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -64,6 +64,6 @@
     font-weight: 500;
 }
 
-.buttonCreate:hover, .buttonCancel:hover {
+.buttonEdit:hover, .buttonCancel:hover {
     opacity: 0.7;
 }

@@ -9,5 +9,7 @@ router.post('/', taskController.createTask);
 router.post('/assign', userController.assignTaskToUser)
 router.get('/project/:projectId', taskController.getTasksByProject);
 router.get('/user/:userId/project/:projectId', taskController.getTasksByUserAndProject);
+router.get('/:taskId', taskController.getTaskById);
+router.put('/:taskId', taskController.updateTask);
 
 module.exports = router;

@@ -36,7 +36,7 @@ exports.getProjects = async (req, res) => {
 
 exports.getProjectById = async (req, res) => {
     try {
-        const project = await Project.findById(req.params.id).populate('task');
+        const project = await Project.findById(req.params.projectId).populate('task');
         if (!project) {
             return res.status(404).send();
         }

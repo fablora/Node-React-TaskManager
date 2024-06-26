@@ -49,6 +49,30 @@ exports.getTasksByUserAndProject = async (req, res) => {
     }
 };
 
+exports.getTaskById = async (req, res) => {
+    try {
+        const task = await Task.findById(req.params.taskId).populate('assignedTo');
+        if (!task) {
+            return res.status(404).json();
+        }
+        res.json(task);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+};
+
+exports.updateTask = async (req, res) => {
+    try {
+        const updatedTask = await Task.findByIdAndUpdate(req.params.taskId, req.body, { new: true});
+        if (!updatedTask) {
+            return res.status(404).json();
+        }
+        res.json(updatedTask);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+};
+
 exports.deleteTask = async (req, res) => {
     try {
         const task = await Task.findById(req.paramd.id);

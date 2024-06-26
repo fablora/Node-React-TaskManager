@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { 
     useReactTable,
     getCoreRowModel,
@@ -8,8 +8,17 @@ import {
     createColumnHelper,
 } from '@tanstack/react-table';
 import styles from './TaskTable.module.css';
+import EditTaskForm from './EditTask';
 
-const TaskTable = ({ tasks, users }) => {    
+const TaskTable = ({ tasks, users, projectId }) => {
+    const [taskList, setTaskList] = useState(tasks);  
+    const [selectedTask, setSelectedTask] = useState(null);
+    const [showEditTaskForm, setShowEditTaskForm] = useState(false);
+
+    useEffect(() => {
+        setTaskList(tasks);
+    }, [tasks]);
+
     const columnHelper = createColumnHelper();
 
     const columns = useMemo(() => [
@@ -37,11 +46,24 @@ const TaskTable = ({ tasks, users }) => {
             });
         },
       }),
-    ],
-    [users]
-  );
+      columnHelper.display({
+        id: 'actions',
+        header: 'Actions',
+        cell: ({ row }) => (
+            <button
+                className = {styles.editButton}
+                onClick=  {() => {
+                    setSelectedTask(row.original);
+                    setShowEditTaskForm(true);
+                }}
+            >
+                Edit
+            </button>
+        ),
+      }),
+    ], [users]);
 
-    const data = useMemo(() => tasks, [tasks]);
+    const data = useMemo(() => taskList, [taskList]);
     const [sorting, setSorting] = useState([]);
 
     const table = useReactTable({
@@ -56,51 +78,69 @@ const TaskTable = ({ tasks, users }) => {
         onSortingChange: setSorting,
     });
 
+    const handleEditTask = (updatedTask) => {
+        setTaskList((prevTasks) => 
+            prevTasks.map((task) =>
+                task._id === updatedTask._id ? updatedTask : task)
+        );
+        setShowEditTaskForm(false);
+    };
+
     return (
-        <table className = {styles.table}>
-            <thead>
-                {table.getHeaderGroups().map(headerGroup => (
-                    <tr key = {headerGroup.id}>
-                        {headerGroup.headers.map(header => (
-                            <th key = {header.id} colSpan = {header.colSpan}>
-                                {header.isPlaceholder ? null : (
-                                    <div
-                                        className = {header.column.getCanSort() ? 'cursor-pointer select-none' : ''}
-                                        onClick = {header.column.getToggleSortingHandler()}
-                                        title = {
-                                            header.column.getCanSort()
-                                                ? header.column.getNextSortingOrder() === 'asc'
-                                                    ? 'Sort ascending'
-                                                    : header.column.getNextSortingOrder() === 'desc'
-                                                        ? 'Sort descending'
-                                                        : 'Clear sort'
-                                                : undefined
-                                        }
-                                    >
-                                        {flexRender(header.column.columnDef.header, header.getContext())}
-                                        {{
-                                            asc: ' 🔼',
-                                            desc: ' 🔽',
-                                        }[header.column.getIsSorted()?.toString()] ?? null}
-                                    </div>
-                                )}
-                            </th>
-                        ))}
-                    </tr>
-                ))}
-            </thead>
-            <tbody>
-                {table.getRowModel().rows.map(row => (
-                    <tr key = {row.id}>
-                        {row.getVisibleCells().map(cell => (
-                            <td key = {cell.id}>
-                                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                            </td>
-                        ))}
-                    </tr>
-                ))}
-            </tbody>
-        </table>
+        <>
+            <table className = {styles.table}>
+                <thead>
+                    {table.getHeaderGroups().map(headerGroup => (
+                        <tr key = {headerGroup.id}>
+                            {headerGroup.headers.map(header => (
+                                <th key = {header.id} colSpan = {header.colSpan}>
+                                    {header.isPlaceholder ? null : (
+                                        <div
+                                            className = {header.column.getCanSort() ? 'cursor-pointer select-none' : ''}
+                                            onClick = {header.column.getToggleSortingHandler()}
+                                            title = {
+                                                header.column.getCanSort()
+                                                    ? header.column.getNextSortingOrder() === 'asc'
+                                                        ? 'Sort ascending'
+                                                        : header.column.getNextSortingOrder() === 'desc'
+                                                            ? 'Sort descending'
+                                                            : 'Clear sort'
+                                                    : undefined
+                                            }
+                                        >
+                                            {flexRender(header.column.columnDef.header, header.getContext())}
+                                            {{
+                                                asc: ' 🔼',
+                                                desc: ' 🔽',
+                                            }[header.column.getIsSorted()?.toString()] ?? null}
+                                        </div>
+                                    )}
+                                </th>
+                            ))}
+                        </tr>
+                    ))}
+                </thead>
+                <tbody>
+                    {table.getRowModel().rows.map(row => (
+                        <tr key = {row.id}>
+                            {row.getVisibleCells().map(cell => (
+                                <td key = {cell.id}>
+                                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                </td>
+                            ))}
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+            {showEditTaskForm && selectedTask && (
+                <EditTaskForm
+                    taskId={selectedTask._id}
+                    projectId={projectId}
+                    onClose={() => setShowEditTaskForm(false)}
+                    onEdit={handleEditTask}
+                />        
+            )}
+        </>
     );
 };
 

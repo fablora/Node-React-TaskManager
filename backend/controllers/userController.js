@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const ProjectAssignment = require('../models/ProjectAssignment');
 const TaskAssignment = require('../models/TaskAssignment');
+const Task = require('../models/Task');
 
 exports.getAllUsers = async (req, res) => {
     try {
@@ -22,6 +23,24 @@ exports.assignUserToProject = async (req, res) => {
         await assignment.save();
         res.status(201).send(assignment);
     } catch (error) {
+        res.status(500).send(error);
+    }
+};
+
+exports.removeUserFromProject = async (req, res) => {
+    try {
+        const { userId, projectId } = req.body;
+        const tasks = await Task.find({ projectId, assignedTo:userId });
+        const taskAssignmentRemovals = tasks.map(async (task) => {
+            await TaskAssignment.deleteMany({ taskId: task._id, userId });
+            task.assignedTo = null;
+            await task.save();
+        });
+        const projectAssignmentRemoval = ProjectAssignment.findOneAndDelete({ userId, projectId });
+        await Promise.all([projectAssignmentRemoval, ...taskAssignmentRemovals]);
+        res.status(200).send({ message: 'User removed from project and task assignments deleted' });
+    } catch (error) {
+        console.error('Error removing user:', error);
         res.status(500).send(error);
     }
 };

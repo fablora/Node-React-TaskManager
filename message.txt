@@ -1,7 +1,25 @@
-feat: Implement TaskTable component for Admin Dashboard
+feat: Implemented Task and User Management Features
 
-- Added TaskTable component to render tasks in the Admin Dashboard
-- Used @tanstack/react-table for table functionality
-- Integrated sorting functionality for each column
-- Displayed user email for 'Assigned To' column, showing 'Unknown User' if no match found
-- Formatted 'Due Date' column to display in 'dd-mm-yyyy' format
+- Added `getTaskById` and `updateTask` functions in `taskController`
+  - `getTaskById`: Retrieves task details by ID.
+  - `updateTask`: Updates task details by ID and returns the updated task.
+
+- Added `removeUserFromProject` function in `userController`
+  - Removes a user from a project and deletes related task assignments.
+
+- Updated `taskRoutes`
+
+- Updated `userRoutes`
+
+- Enhanced Admin Dashboard
+  - Implemented `handleRemoveUserFromProject` function to handle user removal from project on frontend.
+
+- Created `EditTaskForm` component
+  - Allows editing task details.
+  - Fetches task details and available users on component mount.
+  - Handles task update and assignment to a user on form submission.
+
+- Integrated API
+  - `getTaskById`, `updateTask`, `assignTaskToUser`, and `getUsersByProject` API calls integrated.
+
+pending: Implement 'removeTaskAssignment' on task update.

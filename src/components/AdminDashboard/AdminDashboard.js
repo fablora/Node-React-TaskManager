@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './AdminDashboard.module.css';
-import { getAllUsers, assignUserToProject, getProjects, getTasks, getTasksByProject } from '../../services/api';
+import { getAllUsers, assignUserToProject, getProjects, getTasks, getTasksByProject, removeUserFromProject } from '../../services/api';
 import CreateProjectForm from '../Project/CreateProject';
 import CreateTaskForm from '../Task/CreateTask';
 import TaskTable from '../Task/TaskTable';
@@ -30,10 +30,20 @@ const AdminDashboard = () => {
         fetchData();
     }, []);
 
-    const handleAssignUserToProject = async (projectId, userId) => {
-        await assignUserToProject(userId, projectId);
-        setAssignedUsers([...assignedUsers, userId]);
+    const handleAssignUserToProject = async (user) => {
+        if (!assignedUsers.includes(user._id)) {
+            await assignUserToProject(user._id, selectedProject._id);
+            setAssignedUsers([...assignedUsers, user._id]);
+        }
     };
+
+    const handleRemoveUserFromProject = async (user) => {
+        if (assignedUsers.includes(user._id)) {
+            await removeUserFromProject(user._id, selectedProject._id);
+            setAssignedUsers(assignedUsers.filter(userId => userId !== user._id));
+        }
+    };
+
 
     const handleProjectClick = async (project) => {
         setSelectedProject(project);
@@ -42,27 +52,6 @@ const AdminDashboard = () => {
         setTasks(projectTasks);
         setAssignedUsers(project.assignedUsers || []);
     };
-
-    const handleUserClick = async (user) => {
-        if (!assignedUsers.includes(user._id)) {
-            await handleAssignUserToProject(selectedProject._id, user._id);
-            setAssignedUsers(...assignedUsers, user._id);
-        }
-    };
-
-    const getUserEmail = (userId) => {
-        const user = users.find(user => user._id === userId);
-        return user ? user.email : 'Unknown User';
-    }
-
-    const formatDate = (dateString) => {
-        const options = { day: '2-digit', month: '2-digit', year: 'numeric'};
-        return new Date(dateString).toLocaleDateString('en-AU', options);
-    };
-
-    const filteredTasks = selectedUser
-        ? tasks.filter(task => task.assignedTo === selectedUser._id)
-        : tasks;
 
     const filteredUsers = users.filter(user =>
         user.email.toLowerCase().includes(searchTerm.toLowerCase())
@@ -111,8 +100,8 @@ const AdminDashboard = () => {
                                     >
                                         <p>{user.email}</p>
                                         <div className = {styles.userButtons}>
-                                            <button className = {styles.addUserButton} onClick = {() => handleUserClick(user)}>+</button>
-                                            <button className = {styles.removeUserButton} onClick = {() => handleUserClick(user)}>x</button>
+                                            <button className = {styles.addUserButton} onClick = {() => handleAssignUserToProject(user)}>+</button>
+                                            <button className = {styles.removeUserButton} onClick = {() => handleRemoveUserFromProject(user)}>x</button>
                                         </div>                                       
                                     </div>
                                 ))}
@@ -127,7 +116,7 @@ const AdminDashboard = () => {
                             <h1 className = {styles.title}>
                                 Tasks
                             </h1>
-                            <TaskTable tasks = {tasks} users = {users} />
+                            <TaskTable tasks = {tasks} users = {users} projectId = {selectedProject._id}/>
                             <button className={styles.circleAddButton} type='button' onClick={() => setShowTaskForm(true)}>T</button>
                         </div>
                     )}                    
