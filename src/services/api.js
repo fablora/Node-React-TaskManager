@@ -123,3 +123,8 @@ export const assignTaskToUser = async (userId, taskId) => {
     const response = await axios.post(`${API_URL}/tasks/assign`, { userId, taskId });
     return response.data;
 };
+
+export const deleteTask = async (taskId) => {
+    const response = await axios.post(`${API_URL}/tasks/deleteTask`, { taskId });
+    return response.data;
+};

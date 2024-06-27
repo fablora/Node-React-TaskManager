@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './AdminDashboard.module.css';
-import { getAllUsers, assignUserToProject, getProjects, getTasks, getTasksByProject, removeUserFromProject } from '../../services/api';
+import { getAllUsers, assignUserToProject, getProjects, getTasks, getTasksByProject, getUsersByProject, removeUserFromProject } from '../../services/api';
 import CreateProjectForm from '../Project/CreateProject';
 import CreateTaskForm from '../Task/CreateTask';
 import TaskTable from '../Task/TaskTable';
@@ -33,14 +33,16 @@ const AdminDashboard = () => {
     const handleAssignUserToProject = async (user) => {
         if (!assignedUsers.includes(user._id)) {
             await assignUserToProject(user._id, selectedProject._id);
-            setAssignedUsers([...assignedUsers, user._id]);
+            setAssignedUsers(prevAssignedUsers => [...prevAssignedUsers, user._id]);
+            console.log('User assigned:', user._id);
         }
     };
 
     const handleRemoveUserFromProject = async (user) => {
         if (assignedUsers.includes(user._id)) {
             await removeUserFromProject(user._id, selectedProject._id);
-            setAssignedUsers(assignedUsers.filter(userId => userId !== user._id));
+            setAssignedUsers(prevAssignedUsers => prevAssignedUsers.filter(userId => userId !== user._id));
+            console.log('User removed:', user._id);
         }
     };
 
@@ -49,8 +51,10 @@ const AdminDashboard = () => {
         setSelectedProject(project);
         setSelectedUser(null);
         const projectTasks = await getTasksByProject(project._id);
+        const assignedUsersData = await getUsersByProject(project._id);
         setTasks(projectTasks);
-        setAssignedUsers(project.assignedUsers || []);
+        setAssignedUsers(assignedUsersData.map(user => user._id));
+        console.log('Assigned users for project:', project._id, assignedUsersData);
     };
 
     const filteredUsers = users.filter(user =>

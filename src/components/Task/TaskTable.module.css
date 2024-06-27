@@ -20,6 +20,12 @@
     font-weight: 550;
   }
 
+  .buttonContainer {
+    display: flex;
+    justify-content: space-between;
+    gap: 0px;
+  }
+
   .editButton {
     height: 22px;
     width: 40px;
@@ -44,6 +50,32 @@
     transform: translateY(-2px);
     box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.3);
     background: linear-gradient(to bottom, #285377, #103555);
+}
+
+.deleteButton {
+  height: 22px;
+  width: 50px;
+  padding: 0px;
+  border-radius: 5px;
+  color: #E1E3E6;
+  font-size: 0.9em;
+  font-weight: 600;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  vertical-align: middle;
+  font-family: 'Times-Roman';
+  cursor: pointer;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  border: none;
+  background: linear-gradient(to bottom, #64170d, #3b0f04);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.deleteButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(to bottom, #773428, #552410);
 }
   
   .table tr:nth-child(even) {

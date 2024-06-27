@@ -1,4 +1,5 @@
 const Task = require('../models/Task');
+const TaskAssignment = require('../models/TaskAssignment');
 
 exports.createTask = async (req, res) => {
     try {
@@ -63,9 +64,22 @@ exports.getTaskById = async (req, res) => {
 
 exports.updateTask = async (req, res) => {
     try {
-        const updatedTask = await Task.findByIdAndUpdate(req.params.taskId, req.body, { new: true});
+        const { taskId } = req.params;
+        const { assignedTo, ...taskData } = req.body;
+
+        const updatedTask = await Task.findByIdAndUpdate(taskId, taskData, { new: true});
         if (!updatedTask) {
             return res.status(404).json();
+        }
+
+        if (assignedTo) {
+            await TaskAssignment.findOneAndUpdate(
+                { taskId },
+                { userId: assignedTo },
+                { upsert: true, new: true }
+            );
+            updatedTask.assignedTo = assignedTo;
+            await updatedTask.save();
         }
         res.json(updatedTask);
     } catch (error) {
@@ -75,12 +89,10 @@ exports.updateTask = async (req, res) => {
 
 exports.deleteTask = async (req, res) => {
     try {
-        const task = await Task.findById(req.paramd.id);
-        if (!task) {
-            return res.status(404).send();
-        }
-        await task.remove();
-        res.send({ message: 'Task and related assignments deleted' });
+        const { taskId } = req.body;
+        await Task.findByIdAndDelete(taskId);
+        await TaskAssignment.deleteMany({ taskId });
+        res.status(200).send({ message: 'Task removed from project and task assignment deleted' });
     } catch (error) {
         console.error('Error deleting tasks:', error);
         res.status(500).send(error);

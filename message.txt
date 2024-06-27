@@ -1,25 +1,19 @@
-feat: Implemented Task and User Management Features
+feat: Update task update logic and implement task deletion
 
-- Added `getTaskById` and `updateTask` functions in `taskController`
-  - `getTaskById`: Retrieves task details by ID.
-  - `updateTask`: Updates task details by ID and returns the updated task.
+- Improved `updateTask` function in `taskController` to handle task assignments:
+  - Update `TaskAssignment` if `assignedTo` is provided.
+  - Save updated task with new assignment.
 
-- Added `removeUserFromProject` function in `userController`
-  - Removes a user from a project and deletes related task assignments.
+- Added `deleteTask` function in `taskController` to delete tasks and related assignments:
+  - Delete task by `taskId`.
+  - Delete related `TaskAssignment` entries.
 
-- Updated `taskRoutes`
+- Added route for task deletion in `routes`
 
-- Updated `userRoutes`
+- Fixed bug preventing correct rendering of users assigned to projects.
 
-- Enhanced Admin Dashboard
-  - Implemented `handleRemoveUserFromProject` function to handle user removal from project on frontend.
+- Implemented task deletion button in task table:
+  - `handleDeleteTask` function calls `deleteTask`.
+  - Updated task list state upon successful deletion.
 
-- Created `EditTaskForm` component
-  - Allows editing task details.
-  - Fetches task details and available users on component mount.
-  - Handles task update and assignment to a user on form submission.
-
-- Integrated API
-  - `getTaskById`, `updateTask`, `assignTaskToUser`, and `getUsersByProject` API calls integrated.
-
-pending: Implement 'removeTaskAssignment' on task update.
+- Added `deleteTask` API function in `api.js`

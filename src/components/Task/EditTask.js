@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from './EditTaskForm.module.css';
-import { getTaskById, updateTask, assignTaskToUser, getUsersByProject } from "../../services/api";
+import { getTaskById, updateTask, getUsersByProject } from "../../services/api";
 
 const EditTaskForm = ({ taskId, projectId, onClose, onEdit }) => {
     const [taskTitle, setTaskTitle] = useState('');
@@ -17,7 +17,7 @@ const EditTaskForm = ({ taskId, projectId, onClose, onEdit }) => {
                 setTaskTitle(taskData.taskTitle);
                 setTaskDescription(taskData.taskDescription);
                 setDueDate(taskData.dueDate.slice(0, 10));
-                setAssignedTo(taskData.assignedTo);
+                setAssignedTo(taskData.assignedTo ? taskData.assignedTo._id : '');
             } catch (error) {
                 console.error('Error fetching task:', error);
             }
@@ -49,9 +49,6 @@ const EditTaskForm = ({ taskId, projectId, onClose, onEdit }) => {
 
         try {
             const updatedTask = await updateTask(taskId, taskData);
-            if (assignedTo) {
-                await assignTaskToUser(assignedTo, updatedTask._id)
-            }
             onEdit(updatedTask);
             onClose();
         } catch (error) {

@@ -1,4 +1,5 @@
 import React, { useMemo, useState, useEffect } from 'react';
+import { deleteTask } from '../../services/api';
 import { 
     useReactTable,
     getCoreRowModel,
@@ -20,6 +21,15 @@ const TaskTable = ({ tasks, users, projectId }) => {
     }, [tasks]);
 
     const columnHelper = createColumnHelper();
+
+    const handleDeleteTask = async (taskId) => {
+        try {
+            await deleteTask(taskId);
+            setTaskList((prevTasks) => prevTasks.filter(task => task._id !== taskId));
+        } catch (error) {
+            console.error('Error deleting task:', error)
+        }
+    };
 
     const columns = useMemo(() => [
 
@@ -50,15 +60,23 @@ const TaskTable = ({ tasks, users, projectId }) => {
         id: 'actions',
         header: 'Actions',
         cell: ({ row }) => (
-            <button
-                className = {styles.editButton}
-                onClick=  {() => {
-                    setSelectedTask(row.original);
-                    setShowEditTaskForm(true);
-                }}
-            >
-                Edit
-            </button>
+            <div className = {styles.buttonContainer}>
+                <button
+                    className = {styles.editButton}
+                    onClick=  {() => {
+                        setSelectedTask(row.original);
+                        setShowEditTaskForm(true);
+                    }}
+                >
+                    Edit
+                </button>
+                <button
+                    className = {styles.deleteButton}
+                    onClick = {() => handleDeleteTask(row.original._id)}
+                >
+                    Delete
+                </button>
+            </div>
         ),
       }),
     ], [users]);
