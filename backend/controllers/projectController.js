@@ -46,6 +46,17 @@ exports.getProjectById = async (req, res) => {
     }
 };
 
+exports.getProjectsByUser = async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const assignments = await ProjectAssignment.find({ userId }).populate('projectId');
+        const projects = assignments.map(a => a.projectId);
+        res.send(projects);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+};
+
 exports.deleteProject = async (req, res) => {
     try {
         const project = await Project.findById(req.params.id);

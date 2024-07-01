@@ -12,8 +12,8 @@ const Register = () => {
     const [error, setError] = useState('');
     const navigate = useNavigate(); 
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
+    const handleSubmit = async (e) => {
+        e.preventDefault();
         try {
             const userData = { email, password };
             await registerUser(userData);

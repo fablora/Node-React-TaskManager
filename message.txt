@@ -1,19 +1,19 @@
-feat: Update task update logic and implement task deletion
+feat: Refactor authentication, user model, project controller, and dashboard components
 
-- Improved `updateTask` function in `taskController` to handle task assignments:
-  - Update `TaskAssignment` if `assignedTo` is provided.
-  - Save updated task with new assignment.
+- **AuthController**:
+  - Improved code structure by adding a reusable `assignToken` function.
+  - Simplified `register` and `login` methods with new User model static methods.
 
-- Added `deleteTask` function in `taskController` to delete tasks and related assignments:
-  - Delete task by `taskId`.
-  - Delete related `TaskAssignment` entries.
+- **User Model**:
+  - Refactored schema to use `validator` package for email and password validation.
+  - Added static methods `signup` and `login` for user registration and authentication.
 
-- Added route for task deletion in `routes`
+- **ProjectController**:
+  - Updated `getProjectsByUser` method to handle project retrieval by user ID.
 
-- Fixed bug preventing correct rendering of users assigned to projects.
+- **Dashboard Component**:
+  - Added JWT decoding to fetch user-specific projects and tasks.
+  - Updated to allow project selection and display tasks related to the selected project.
 
-- Implemented task deletion button in task table:
-  - `handleDeleteTask` function calls `deleteTask`.
-  - Updated task list state upon successful deletion.
-
-- Added `deleteTask` API function in `api.js`
+- **API Service**:
+  - Added detailed comments for all endpoint calls.

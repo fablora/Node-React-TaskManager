@@ -4,20 +4,17 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const jwtSecret = process.env.JWT_SECRET;
+const assignToken = (_id) => {
+    return jwt.sign({ userId: _id }, jwtSecret, { expiresIn: '1d'})
+}
 
 exports.register = async (req, res) => {
     try {
-        const { email, password } = req.body;
-        const existingUser = await User.findOne({ email });
-        if (existingUser) {
-            return res.status(400).send('Username already registered');
-        }
+        const { email, password } = req.body;    
 
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
-        const user = new User({ email, password: hashedPassword});
-        await user.save();
-        const token = jwt.sign({ userId: user._id }, jwtSecret)
+        const user = await User.signup(email, password);       
+        const token = assignToken(user._id);
+        
         res.status(201).send({ user, token });
     } catch (error) {
         console.error('Error registering user: ', error)
@@ -28,11 +25,8 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
-        const user = await User.findOne({ email });
-        if (!user || !(await bcrypt.compare(password, user.password))) {
-            return res.status(400).send('Invalid credencials');
-        }
-        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
+        const user = await User.login(email, password);
+        const token = assignToken(user._id);
         res.send({ token });
     } catch (error) {
         console.error('Error logging in: ', error)

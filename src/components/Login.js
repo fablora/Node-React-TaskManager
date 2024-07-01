@@ -9,18 +9,20 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
+    const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    const handleSubmit =async (event) => {
-        event.preventDefault();
+    const handleSubmit =async (e) => {
+        e.preventDefault();
         try {
             const userData = { email, password };
             const response = await loginUser(userData);
             localStorage.setItem('token', response.token);
             setMessage('Login Succesful');
+            setError('');
             navigate('/dashboard');
         } catch (error) {
-            setMessage('An error occurred during login: ' + error.response.data);
+            setError(error.response?.data || 'There was an error during the registration');
         }
     };
 
@@ -29,6 +31,7 @@ const Login = () => {
             <div className = {styles.formBox}>
                 <form onSubmit = {handleSubmit}>
                     <h1>Login</h1>
+                    {error && <p className = {styles.errorMessage}>{error}</p>}
                     <div className = {styles.inputBox}>
                         <input type = "email"
                         placeholder= "Email"
@@ -53,6 +56,7 @@ const Login = () => {
                         <p>Don't have an account? <Link to="/register">Register</Link></p>
                     </div>
                 </form>
+                {message && <p>{message}</p>}
             </div>
         </div>
     );

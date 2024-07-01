@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const {isEmail, isStrongPassword} = require('validator');
 const ProjectAssignment = require('./ProjectAssignment');
 const TaskAssignment = require('./TaskAssignment');
 
@@ -10,25 +11,12 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true,
         trim: true,
-        lowercase: true,
-        validate: {
-            validator: function (v) {
-                return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v);
-            },
-            message: props => '${props.value} is no a valid email'
-        }
+        lowercase: true
     },
     password: {
         type: String,
         required: true,
         minlength: 6,
-        validate: {
-            validator: function (v) {
-                const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*[\]{}();:'",.<>?_\\\-+=|/~`])[A-Za-z\d!@#$%^&*[\]{}();:'",.<>?_\\\-+=|/~`]{6,}$/;
-                return regex.test(v) && !/\s/.test(v);
-            },
-            message: props => `${props.value} is not a valid password. It must contain at least one uppercase letter, one lowercase letter, one digit, one special character, and no spaces.`
-        }
     },
     role: {
         type: String,
@@ -38,6 +26,53 @@ const userSchema = new mongoose.Schema({
 }, {
     timestamps: true
 });
+// Static Registration
+userSchema.statics.signup = async function (email, password) {
+
+    // Validate
+    if (!email || !password) {
+        throw Error('Please fill all the fields');
+    }
+    if (!isEmail(email)) {
+        throw Error('The email must be valid');
+    }
+    if (!isStrongPassword(password)) {
+        throw Error('The password must be at least 6 characters long and contain at least one special symbol, one number, one uppercase and one lowercase letter');
+    }
+    
+    const exists = await this.findOne({ email });
+
+    if (exists) {
+        throw Error('Email already registered');
+    }
+   
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    const user = await this.create({ email, password: hashedPassword });
+    return user;
+
+}
+
+// Static Login
+userSchema.statics.login = async function (email, password) {
+    if (!email || !password) {
+        throw Error('Please fill all the fields')
+    }
+
+    const user = await this.findOne({ email });
+    if (!user) {
+        throw Error('Username not found');
+    }
+
+    const matchPassword = await bcrypt.compare(password, user.password);
+    if(!matchPassword) {
+        throw Error('Incorrect password');
+    }
+
+    return user
+    
+}
 
 userSchema.pre('remove', async function (next) {
     await ProjectAssignment.deleteMany({ userId: this_.id });

@@ -43,7 +43,8 @@ exports.getTasksByProject = async (req, res) => {
 
 exports.getTasksByUserAndProject = async (req, res) => {
     try {
-        const tasks = await Task.find({ projectId: req.params.projectId, assignedTo: req.params.userId });
+        const { projectId, userId } = req.params;
+        const tasks = await Task.find({ projectId, assignedTo: userId });
         res.send(tasks);
     } catch (error){
         res.status(500).send(error);
