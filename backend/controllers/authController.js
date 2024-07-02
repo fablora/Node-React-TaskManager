@@ -4,8 +4,8 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const jwtSecret = process.env.JWT_SECRET;
-const assignToken = (_id) => {
-    return jwt.sign({ userId: _id }, jwtSecret, { expiresIn: '1d'})
+const assignToken = (user) => {
+    return jwt.sign({ userId: user._id, role: user.role }, jwtSecret, { expiresIn: '1d'})
 }
 
 exports.register = async (req, res) => {
@@ -13,7 +13,7 @@ exports.register = async (req, res) => {
         const { email, password } = req.body;    
 
         const user = await User.signup(email, password);       
-        const token = assignToken(user._id);
+        const token = assignToken(user);
         
         res.status(201).send({ user, token });
     } catch (error) {
@@ -26,7 +26,7 @@ exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
         const user = await User.login(email, password);
-        const token = assignToken(user._id);
+        const token = assignToken(user);
         res.send({ token });
     } catch (error) {
         console.error('Error logging in: ', error)

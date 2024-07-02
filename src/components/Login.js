@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from './LoginRegister.module.css';
 import { loginUser } from "../services/api";
 import { FaUser, FaKey } from "react-icons/fa";
+import { jwtDecode } from 'jwt-decode';
 
 
 const Login = () => {
@@ -20,7 +21,15 @@ const Login = () => {
             localStorage.setItem('token', response.token);
             setMessage('Login Succesful');
             setError('');
-            navigate('/dashboard');
+
+            const user = jwtDecode(response.token);
+            if (user.role === 'admin') {
+                navigate('/admin');
+            } else if (user.role === 'user') {
+                navigate('/dashboard');
+            } else {
+                console.log('Authentication error!')
+            }
         } catch (error) {
             setError(error.response?.data || 'There was an error during the registration');
         }

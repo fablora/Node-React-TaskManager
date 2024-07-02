@@ -1,19 +1,19 @@
-feat: Refactor authentication, user model, project controller, and dashboard components
+feat: Add admin authentication and restructure routes
 
-- **AuthController**:
-  - Improved code structure by adding a reusable `assignToken` function.
-  - Simplified `register` and `login` methods with new User model static methods.
+- Added admin routes in server.js
+- Created admin authentication middleware (adminAuthMiddleware)
+- Created user authentication middleware (authMiddleware)
+- Restructured routes into public/user and admin routes
 
-- **User Model**:
-  - Refactored schema to use `validator` package for email and password validation.
-  - Added static methods `signup` and `login` for user registration and authentication.
+- Implemented protected routes in the front end
+  - Created ProtectedRoute component
+  - Decodes JWT token and checks user role
+  - Allows access to admin routes for admin users
+  - Redirects to login if no token is found or token is invalid
 
-- **ProjectController**:
-  - Updated `getProjectsByUser` method to handle project retrieval by user ID.
+- Implemented table for task view on dashboard component
+- Updated routes.js to use ProtectedRoute component
+- Adjusted API calls to reflect route restructuring
 
-- **Dashboard Component**:
-  - Added JWT decoding to fetch user-specific projects and tasks.
-  - Updated to allow project selection and display tasks related to the selected project.
-
-- **API Service**:
-  - Added detailed comments for all endpoint calls.
+- Next steps:
+  - Improve reusability and tackle redundancy by implementing hooks and utils folders in the front end

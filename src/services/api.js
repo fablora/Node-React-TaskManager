@@ -3,7 +3,7 @@ import axios from "axios";
 const API_URL = 'http://localhost:5000';
 
 axios.interceptors.request.use(
-    config => {
+    (config) => {
         const token = localStorage.getItem('token');
         if (token) {
             config.headers['Authorization'] = 'Bearer ' + token;
@@ -47,8 +47,12 @@ export const loginUser = async (userData) => {
  * @returns {Array} - List of users
  */
 export const getAllUsers = async () => {
-    const response = await axios.get(`${API_URL}/users`);
-    return response.data;
+    try {
+        const response = await axios.get(`${API_URL}/admin/users`);
+        return response.data;
+    } catch (error) {
+        console.error('Error in getAllUsers API:', error.response.data);
+    }
 };
 
 /**
@@ -57,7 +61,7 @@ export const getAllUsers = async () => {
  * @returns {Array} - List of users assigned to the project
  */
 export const getUsersByProject = async (projectId) => {
-    const response = await axios.get(`${API_URL}/projects/${projectId}/users`);
+    const response = await axios.get(`${API_URL}/admin/projects/${projectId}/users`);
     return response.data;
 };
 
@@ -70,7 +74,7 @@ export const getUsersByProject = async (projectId) => {
  */
 export const createProject = async (projectData) => {
     try {
-        const response = await axios.post(`${API_URL}/projects`, projectData);
+        const response = await axios.post(`${API_URL}/admin/projects`, projectData);
         return response.data;
     } catch (error) {
         console.error('Error in createProject API:', error.response.data);
@@ -83,7 +87,7 @@ export const createProject = async (projectData) => {
  * @returns {Array} - List of projects
  */
 export const getProjects = async () => {
-    const response = await axios.get(`${API_URL}/projects`);
+    const response = await axios.get(`${API_URL}/admin/projects`);
     return response.data;
 };
 
@@ -93,7 +97,7 @@ export const getProjects = async () => {
  * @returns {Object} - Project data
  */
 export const getProjectById = async (id) => {
-    const response = await axios.get(`${API_URL}/projects/${id}`);
+    const response = await axios.get(`${API_URL}/admin/projects/${id}`);
     return response.data;
 };
 
@@ -104,9 +108,7 @@ export const getProjectById = async (id) => {
  */
 export const getProjectsByUser = async (userId) => {
     try {
-        console.log('Get Projects by User ID', userId);
         const response = await axios.get(`${API_URL}/projects/user/${userId}`);
-        console.log('Get Projects by User data', response.data);
         return response.data;
     } catch (error) {
         console.error('Error fetching projects: ', error.response.data);
@@ -121,7 +123,7 @@ export const getProjectsByUser = async (userId) => {
  * @returns {Object} - Assignment data
  */
 export const assignUserToProject = async (userId, projectId) => {
-    const response = await axios.post(`${API_URL}/projects/assign`, { userId, projectId });
+    const response = await axios.post(`${API_URL}/admin/projects/assign`, { userId, projectId });
     return response.data;
 };
 
@@ -132,7 +134,7 @@ export const assignUserToProject = async (userId, projectId) => {
  * @returns {Object} - Removal confirmation data
  */
 export const removeUserFromProject = async (userId, projectId) => {
-    const response = await axios.post(`${API_URL}/users/removeFromProject`, { userId, projectId });
+    const response = await axios.post(`${API_URL}/admin/users/removeFromProject`, { userId, projectId });
     return response.data;
 };
 
@@ -145,7 +147,7 @@ export const removeUserFromProject = async (userId, projectId) => {
  */
 export const createTask = async (taskData) => {
     try {
-        const response = await axios.post(`${API_URL}/tasks`, taskData, {
+        const response = await axios.post(`${API_URL}/admin/tasks`, taskData, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -163,7 +165,7 @@ export const createTask = async (taskData) => {
  * @returns {Array} - List of tasks for the project
  */
 export const getTasksByProject = async (projectId) => {
-    const response = await axios.get(`${API_URL}/tasks/project/${projectId}`);
+    const response = await axios.get(`${API_URL}/admin/tasks/project/${projectId}`);
     return response.data;
 };
 
@@ -183,7 +185,7 @@ export const getTasksByUserAndProject = async (userId, projectId) => {
  * @returns {Array} - List of tasks
  */
 export const getTasks = async () => {
-    const response = await axios.get(`${API_URL}/tasks`);
+    const response = await axios.get(`${API_URL}/admin/tasks`);
     return response.data;
 };
 
@@ -193,7 +195,7 @@ export const getTasks = async () => {
  * @returns {Object} - Task data
  */
 export const getTaskById = async (taskId) => {
-    const response = await axios.get(`${API_URL}/tasks/${taskId}`);
+    const response = await axios.get(`${API_URL}/admin/tasks/${taskId}`);
     return response.data;
 };
 
@@ -205,7 +207,7 @@ export const getTaskById = async (taskId) => {
  */
 export const updateTask = async (taskId, taskData) => {
     try {
-        const response = await axios.put(`${API_URL}/tasks/${taskId}`, taskData, {
+        const response = await axios.put(`${API_URL}/admin/tasks/${taskId}`, taskData, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -224,7 +226,7 @@ export const updateTask = async (taskId, taskData) => {
  * @returns {Object} - Assignment data
  */
 export const assignTaskToUser = async (userId, taskId) => {
-    const response = await axios.post(`${API_URL}/tasks/assign`, { userId, taskId });
+    const response = await axios.post(`${API_URL}/admin/tasks/assign`, { userId, taskId });
     return response.data;
 };
 
@@ -234,6 +236,6 @@ export const assignTaskToUser = async (userId, taskId) => {
  * @returns {Object} - Deletion confirmation data
  */
 export const deleteTask = async (taskId) => {
-    const response = await axios.post(`${API_URL}/tasks/deleteTask`, { taskId });
+    const response = await axios.post(`${API_URL}/admin/tasks/deleteTask`, { taskId });
     return response.data;
 };

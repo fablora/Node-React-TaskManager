@@ -50,7 +50,7 @@
     flex-direction: column;
     flex-grow: 1;
     padding: 40px;
-    color: white;
+    color: #E1E3E6;
 }
 
 .titleHasTextPrimary{
@@ -64,7 +64,7 @@
     margin-top: 15px;
     flex-direction: column;
     flex-grow: 1;
-    color: white;
+    color: #E1E3E6;
 }
 
 .listMenuItem {
@@ -74,7 +74,7 @@
     width: 100%;
     margin-bottom: 5px;
     padding: 5px;
-    color: white;
+    color: #E1E3E6;
 }
 
 .listMenuItem:hover {
@@ -86,11 +86,33 @@
     
 }
 
-.task {
-    background: black;
-    padding: 15px 20px;
-    border-radius: 5px;
-    margin-top: 10px;
-    color: white;
+.taskTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
 }
 
+.taskTable th, .taskTable td {
+    padding: 8px;
+}
+
+.taskTable th {
+    color: #36454F;
+    text-align: left;
+}
+
+.taskRow:hover {    
+    background-color: #575757;
+    cursor: pointer;
+}
+
+.taskDescriptionRow {
+    
+    background-color: #1a1a1a;
+    color: #E1E3E6;
+}
+
+.taskDescriptionRow td {
+    padding: 10px;
+    border-bottom-left-radius: 8px;
+}

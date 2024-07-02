@@ -14,8 +14,10 @@ function AppRoutes() {
                 <Route path = '/' element = {<Home />} />
                 <Route path = '/register' element = {<Register />} />
                 <Route path = '/login' element = {<Login />} />
-                <Route path = '/dashboard' element = {<Dashboard/>} /> {/* element = {<ProtectedRoute element = {Dashboard} />} ---- element = {<Dashboard/>} */}
-                <Route path = '/admin' element = {<AdminDashboard/>} />
+                <Route element={<ProtectedRoute />}>                    
+                    <Route path = '/admin' element = {<AdminDashboard/>} />
+                    <Route path = '/dashboard' element = {<Dashboard/>} />
+                </Route>
             </Routes>
         </Router>
     );

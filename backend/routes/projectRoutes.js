@@ -1,14 +1,11 @@
 const express = require('express');
 const projectController = require('../controllers/projectController');
 const userController = require('../controllers/userController');
+const requireAuth = require('../middleware/authMiddleware');
 
 const router = express.Router();
+router.use(requireAuth);
 
-router.get('/', projectController.getProjects);
-router.post('/', projectController.createProject);
-router.get('/projects/:id', projectController.getProjectById);
-router.post('/assign', userController.assignUserToProject);
-router.get('/:projectId/users', userController.getUsersByProject);
 router.get('/user/:userId', projectController.getProjectsByUser);
 
 module.exports = router;
