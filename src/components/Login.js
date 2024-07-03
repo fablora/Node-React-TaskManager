@@ -1,23 +1,23 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from './LoginRegister.module.css';
+import useForm from "./hooks/useForm";
 import { loginUser } from "../services/api";
 import { FaUser, FaKey } from "react-icons/fa";
 import { jwtDecode } from 'jwt-decode';
 
 
 const Login = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [message, setMessage] = useState('');
-    const [error, setError] = useState('');
+    const [values, handleChange, message, setMessage, error, setError] = useForm({
+        email: '',
+        password: '',
+    });
     const navigate = useNavigate();
 
     const handleSubmit =async (e) => {
         e.preventDefault();
         try {
-            const userData = { email, password };
-            const response = await loginUser(userData);
+            const response = await loginUser(values);
             localStorage.setItem('token', response.token);
             setMessage('Login Succesful');
             setError('');
@@ -43,16 +43,18 @@ const Login = () => {
                     {error && <p className = {styles.errorMessage}>{error}</p>}
                     <div className = {styles.inputBox}>
                         <input type = "email"
+                        name = "email"
                         placeholder= "Email"
-                        value = {email}
-                        onChange = {(e) => setEmail(e.target.value)} required />
+                        value = {values.email}
+                        onChange = {handleChange} required />
                         <FaUser className = {styles.icon}/>
                     </div>
                     <div className = {styles.inputBox}>
                         <input type = "password"
+                        name = "password"
                         placeholder= "Password"
-                        value = {password}
-                        onChange = {(e) => setPassword(e.target.value)} required />
+                        value = {values.password}
+                        onChange = {handleChange} required />
                         <FaKey className = {styles.icon}/>
                     </div>
 

@@ -1,19 +1,5 @@
-feat: Add admin authentication and restructure routes
+feat: Implement reusable hooks for forms and user ID
 
-- Added admin routes in server.js
-- Created admin authentication middleware (adminAuthMiddleware)
-- Created user authentication middleware (authMiddleware)
-- Restructured routes into public/user and admin routes
-
-- Implemented protected routes in the front end
-  - Created ProtectedRoute component
-  - Decodes JWT token and checks user role
-  - Allows access to admin routes for admin users
-  - Redirects to login if no token is found or token is invalid
-
-- Implemented table for task view on dashboard component
-- Updated routes.js to use ProtectedRoute component
-- Adjusted API calls to reflect route restructuring
-
-- Next steps:
-  - Improve reusability and tackle redundancy by implementing hooks and utils folders in the front end
+- Added `useForm` hook to manage form state and reduce redundancy.
+- Added `useUserId` hook to handle token decoding and retrieval.
+- Integrated hooks into Login, Register, and Dashboard components.

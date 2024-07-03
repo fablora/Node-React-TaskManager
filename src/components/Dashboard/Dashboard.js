@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { jwtDecode } from 'jwt-decode';
+import useUserId from '../hooks/useUserId';
 import { getProjectsByUser, getTasksByUserAndProject } from '../../services/api';
 import styles from './Dashboard.module.css';
 
@@ -8,26 +8,21 @@ const Dashboard= () => {
     const [tasks, setTasks] = useState([]);
     const [selectedProject, setSelectedProject] = useState(null);
     const [displayTaskDescription, setDisplayTaskDescription] = useState(null);
+    const userId = useUserId();
 
     useEffect(() => {
         const fetchData = async () => {
-            const token = localStorage.getItem('token');
-            if (token) {
-                const decodedToken = jwtDecode(token);
-                const userId = decodedToken.userId;         
+            if (userId) {    
                 const projectData = await getProjectsByUser(userId);
                 setProjects(projectData);
             }
         };
         fetchData();
-    }, []);
+    }, [userId]);
 
     const handleProjectClick = async (project) => {
         setSelectedProject(project);
-        const token = localStorage.getItem('token');
-        if (token) {
-            const decodedToken = jwtDecode(token);
-            const userId = decodedToken.userId;         
+        if (userId) {    
             const taskData = await getTasksByUserAndProject(userId, project._id)
             setTasks(taskData);
         }

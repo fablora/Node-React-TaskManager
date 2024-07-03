@@ -1,22 +1,22 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from './LoginRegister.module.css';
+import useForm from "./hooks/useForm";
 import { registerUser } from "../services/api";
 import { MdEmail } from "react-icons/md";
 import { FaKey } from "react-icons/fa";
 
 const Register = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [message, setMessage] = useState('');
-    const [error, setError] = useState('');
+    const [values, handleChange, message, setMessage, error, setError] = useForm({
+        email: '',
+        password: '',
+    });
     const navigate = useNavigate(); 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            const userData = { email, password };
-            await registerUser(userData);
+        try {            
+            await registerUser(values);
             setMessage('Registration Succesful');
             setError('');
             navigate('/login');
@@ -33,16 +33,18 @@ const Register = () => {
                     {error && <p className = {styles.errorMessage}>{error}</p>}
                     <div className = {styles.inputBox}>
                         <input type = "email"
+                        name = "email"
                         placeholder = "Email" 
-                        value = {email} 
-                        onChange = {(e) => setEmail(e.target.value)} required />
+                        value = {values.email} 
+                        onChange = {handleChange} required />
                         <MdEmail className = {styles.icon}/>
                     </div>
                     <div className = {styles.inputBox}>
                         <input type = "password"
+                        name = "password"
                         placeholder = "Password" 
-                        value = {password} 
-                        onChange = {(e) => setPassword(e.target.value)} required />
+                        value = {values.password} 
+                        onChange = {handleChange} required />
                         <FaKey className = {styles.icon}/>
                     </div>
                     <div className = {styles.agreeTerms}>
