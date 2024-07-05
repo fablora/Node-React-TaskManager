@@ -1,5 +1,27 @@
-feat: Implement reusable hooks for forms and user ID
+feat: Implement user logout functionality and various hooks
 
-- Added `useForm` hook to manage form state and reduce redundancy.
-- Added `useUserId` hook to handle token decoding and retrieval.
-- Integrated hooks into Login, Register, and Dashboard components.
+- Added `logout` method in `authController` to handle user logout:
+  - Marks tokens as invalid upon logout
+
+
+- Created `LogoutButton` component:
+  - Triggers `logoutUser` function on click
+  - Imported into Dashboard and Admin Dashboard components
+
+- Implemented `useForm` custom hook:
+  - Manages form state, handles input changes
+
+- Implemented `useProjectUsers` custom hook:
+  - Fetches users associated with a specific project
+
+
+- Implemented `useUserId` custom hook:
+  - Decodes JWT token to retrieve user ID
+  - Sets user ID state and handles invalid tokens
+
+- Set up Axios response interceptor:
+  - Automatically logs out user if a 401 Unauthorized error occurs
+
+- Defined `logoutUser` utility:
+  - Removes JWT token from local storage
+  - Redirects to login page upon logout

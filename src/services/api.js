@@ -1,4 +1,5 @@
 import axios from "axios";
+import { logoutUser } from "./auth";
 
 const API_URL = 'http://localhost:5000';
 
@@ -11,6 +12,16 @@ axios.interceptors.request.use(
         return config;
     },
     error => {
+        return Promise.reject(error);
+    }
+);
+
+axios.interceptors.response.use(
+    response => response,
+    error => {
+        if (error.response && error.response.status === 401) {
+            logoutUser();
+        }
         return Promise.reject(error);
     }
 );

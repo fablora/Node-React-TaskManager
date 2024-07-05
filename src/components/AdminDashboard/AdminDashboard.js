@@ -4,6 +4,7 @@ import { getAllUsers, assignUserToProject, getProjects, getTasks, getTasksByProj
 import CreateProjectForm from '../Project/CreateProject';
 import CreateTaskForm from '../Task/CreateTask';
 import TaskTable from '../Task/TaskTable';
+import LogoutButton from '../Buttons/LogoutButton';
 
 const AdminDashboard = () => {
     const [users, setUsers] = useState([]);
@@ -65,6 +66,7 @@ const AdminDashboard = () => {
         <div className = {styles.wrapper}>
             <div className = {styles.centeredContent}>
                 <div className = {styles.projectsContainer}>
+                    <LogoutButton />
                     <div className = {styles.sidebar}>
                         <h1 className = {styles.title}>
                             Projects

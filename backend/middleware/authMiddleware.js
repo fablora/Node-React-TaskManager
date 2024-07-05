@@ -2,6 +2,8 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 require('dotenv').config();
 
+const invalidTokens = new Set();
+
 const requireAuth = async (req, res, next) => {
     try{
         const { authorization } = req.headers
@@ -11,8 +13,12 @@ const requireAuth = async (req, res, next) => {
         }
 
         const token = authorization.split(' ')[1];
-        const { userId } = jwt.verify(token, process.env.JWT_SECRET);
+        if (invalidTokens.has(token)){
+            return res.status(401).json({ message: 'Token has expired'});
+        }
 
+
+        const { userId } = jwt.verify(token, process.env.JWT_SECRET);
         const user = await User.findById(userId);
         if (!user) {
             return res.status(401).json({ message: 'Request not authorized' });
@@ -26,3 +32,4 @@ const requireAuth = async (req, res, next) => {
 };
 
 module.exports = requireAuth;
+

@@ -33,3 +33,9 @@ exports.login = async (req, res) => {
         res.status(500).send('Error logging in: ' + error.message);
     }
 };
+
+exports.logout = async (req, res) => {
+    const { token } = req.body;
+    invalidTokens.add(token);
+    res.status(200).send({ message: 'Logged out successfully'})
+};

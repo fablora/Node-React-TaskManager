@@ -1,0 +1,15 @@
+.LogoutButton {
+    position: absolute;
+    top: 0px;
+    right: 10px;
+    color: #36454F;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.LogoutButton:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+}

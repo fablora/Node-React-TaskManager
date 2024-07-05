@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import styles from './EditTaskForm.module.css';
-import { getTaskById, updateTask, getUsersByProject } from "../../services/api";
+import { getTaskById, updateTask } from "../../services/api";
+import useProjectUsers from '../../hooks/useProjectUsers';
 
 const EditTaskForm = ({ taskId, projectId, onClose, onEdit }) => {
     const [taskTitle, setTaskTitle] = useState('');
     const [taskDescription, setTaskDescription] = useState('');
     const [dueDate, setDueDate] = useState('');
-    const [taskStatus, setTaskStatus] = useState('To Do');
-    const [users, setUsers] = useState([]);
+    const [taskStatus, setTaskStatus] = useState('To Do');    
     const [assignedTo, setAssignedTo] = useState('');
+    const users = useProjectUsers(projectId);
 
     useEffect(() => {
         const fetchTask = async () => {
@@ -22,19 +23,8 @@ const EditTaskForm = ({ taskId, projectId, onClose, onEdit }) => {
                 console.error('Error fetching task:', error);
             }
         };
-
-        const fetchUsers = async () => {
-            try {
-                const usersData =  await getUsersByProject(projectId);
-                console.log('Fetched users:', usersData);
-                setUsers(usersData);
-            } catch (error) {
-                console.error('Error fetching users:', error)
-            }
-        };
         fetchTask();
-        fetchUsers();
-    }, [taskId, projectId]);
+    }, [taskId]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();

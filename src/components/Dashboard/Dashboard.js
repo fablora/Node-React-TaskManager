@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import useUserId from '../hooks/useUserId';
+import useUserId from '../../hooks/useUserId';
 import { getProjectsByUser, getTasksByUserAndProject } from '../../services/api';
 import styles from './Dashboard.module.css';
+import LogoutButton from '../Buttons/LogoutButton';
 
 const Dashboard= () => {
     const [projects, setProjects] = useState([]);
@@ -36,6 +37,7 @@ const Dashboard= () => {
         <div className = {styles.wrapper}>
             <div className = {styles.centeredContent}>
                 <div className = {styles.projectsContainer}>
+                    <LogoutButton />
                     <div className = {styles.sidebar}>
                         <h1 className = {styles.title}>
                             Projects

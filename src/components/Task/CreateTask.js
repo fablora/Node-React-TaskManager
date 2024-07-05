@@ -1,26 +1,14 @@
 import React, { useState, useEffect } from "react";
 import styles from './CreateTaskForm.module.css';
 import { createTask, assignTaskToUser, getUsersByProject } from "../../services/api";
+import useProjectUsers from "../../hooks/useProjectUsers";
 
 const CreateTaskForm = ({ projectId, onClose, onCreate }) => {
     const [taskTitle, setTaskTitle] = useState('');
     const [taskDescription, setTaskDescription] = useState('');
     const [dueDate, setDueDate] = useState('');
-    const [users, setUsers] = useState([]);
     const [assignedTo, setAssignedTo] = useState('');
-
-    useEffect(() => {
-        const fetchUsers = async () => {
-            try {
-                const usersData =  await getUsersByProject(projectId);
-                console.log('Fetched users:', usersData);
-                setUsers(usersData);
-            } catch (error) {
-                console.error('Error fetching users:', error)
-            }
-        };
-        fetchUsers();
-    }, [projectId]);
+    const users = useProjectUsers(projectId);
 
     const handleSubmit = async (e) => {
         e.preventDefault();

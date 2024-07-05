@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from './LoginRegister.module.css';
-import useForm from "./hooks/useForm";
+import useForm from "../hooks/useForm";
 import { registerUser } from "../services/api";
 import { MdEmail } from "react-icons/md";
 import { FaKey } from "react-icons/fa";

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from './LoginRegister.module.css';
-import useForm from "./hooks/useForm";
+import useForm from "../hooks/useForm";
 import { loginUser } from "../services/api";
 import { FaUser, FaKey } from "react-icons/fa";
 import { jwtDecode } from 'jwt-decode';
